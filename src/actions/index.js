@@ -1,5 +1,5 @@
-import { GET_USER, LOGOUT_USER, GET_HOUSEHOLDS } from "./types";
-import { onLogin, getHouseholds, fetchUser } from "../api/index";
+import { GET_USER, LOGOUT_USER, GET_HOUSEHOLDS, CREATE_USER } from "./types";
+import { onLogin, getHouseholds, fetchUser, onCreate } from "../api/index";
 
 export function loginUser(user_params, history) {
   return function(dispatch) {
@@ -8,6 +8,19 @@ export function loginUser(user_params, history) {
       } else {
         localStorage.setItem("token", data["token"]);
         dispatch({ type: GET_USER, payload: data });
+        history.push("/");
+      }
+    });
+  };
+}
+
+export function createUser(user_params, history) {
+  return function(dispatch) {
+    onCreate(user_params).then(data => {
+      if (data.error) {
+      } else {
+        localStorage.setItem("token", data["token"]);
+        dispatch({ type: CREATE_USER, payload: data });
         history.push("/");
       }
     });
@@ -35,13 +48,15 @@ export function households(user_params, history) {
 
 export function checkUser(user_params, history) {
   let token = localStorage.token;
-  return function(dispatch) {
-    fetchUser(token).then(data => {
-      if (data.error) {
-      } else {
-        dispatch({ type: GET_USER, payload: data });
-        history.push("/");
-      }
-    });
-  };
+  if (token !== undefined) {
+    return function(dispatch) {
+      fetchUser(token).then(data => {
+        if (data.error) {
+        } else {
+          dispatch({ type: GET_USER, payload: data });
+          history.push("/");
+        }
+      });
+    };
+  }
 }

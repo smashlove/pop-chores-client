@@ -36,7 +36,7 @@ class App extends Component {
   componentDidMount = () => {
     console.log("comp did mount", this.props);
     this.props.households();
-    if (localStorage.token !== "undefined") {
+    if (localStorage.token !== undefined) {
       this.props.checkUser(this.state, this.props.history);
     }
   };
