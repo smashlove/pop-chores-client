@@ -1,10 +1,10 @@
-import { LOGIN_USER, LOGOUT_USER } from "../actions/types";
+import { GET_USER, LOGOUT_USER } from "../actions/types";
 
-const defaultState = {};
+const defaultState = { loggedIn: false };
 
 export default function users(state = defaultState, action) {
   switch (action.type) {
-    case LOGIN_USER:
+    case GET_USER:
       return {
         ...state,
         first_name: action.payload.user.first_name,

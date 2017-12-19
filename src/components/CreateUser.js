@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 import {
   Button,
   Form,
@@ -8,7 +10,8 @@ import {
   Header,
   Image,
   Message,
-  Segment
+  Segment,
+  Input
 } from "semantic-ui-react";
 
 class CreateUser extends Component {
@@ -28,6 +31,18 @@ class CreateUser extends Component {
               <Segment stacked>
                 <Form.Input
                   fluid
+                  name="first_name"
+                  placeholder="First Name"
+                  type="text"
+                />{" "}
+                <Form.Input
+                  fluid
+                  name="last_name"
+                  placeholder="Last Name"
+                  type="text"
+                />
+                <Form.Input
+                  fluid
                   icon="user"
                   iconPosition="left"
                   placeholder="Username"
@@ -41,15 +56,11 @@ class CreateUser extends Component {
                   placeholder="Password"
                   type="password"
                 />
-
                 <Button color="orange" fluid size="large">
-                  Login
+                  Submit
                 </Button>
               </Segment>
             </Form>
-            <Message>
-              New to us? <a>Create an Account</a>
-            </Message>
           </Grid.Column>
         </Grid>
       </div>
@@ -57,4 +68,10 @@ class CreateUser extends Component {
   }
 }
 
-export default withRouter(CreateUser);
+const mapStateToProps = state => {
+  return {
+    households: state.households
+  };
+};
+
+export default withRouter(connect(mapStateToProps, null)(CreateUser));

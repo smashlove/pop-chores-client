@@ -12,8 +12,6 @@ import CreateUser from "./CreateUser";
 import Login from "./Login";
 import * as actions from "../actions/index";
 
-const url = "http://localhost:3001/api/v1";
-
 class App extends Component {
   constructor() {
     super();
@@ -31,56 +29,17 @@ class App extends Component {
     }
   };
 
-  // onLogin = form => {
-  //   // debugger;
-  //   fetch(`${url}/auth`, {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //       accept: "application/json",
-  //       Authorization: localStorage.getItem("jwt")
-  //     },
-  //     body: JSON.stringify(form.fields)
-  //   })
-  //     .then(res => res.json())
-  //     .then(user => {
-  //       if (!user.error) {
-  //         this.setState({
-  //           authorization: { isLoggedIn: true, user: user },
-  //           error: ""
-  //         });
-  //         localStorage.setItem("jwt", user.jwt);
-  //         this.findCurrentUser();
-  //         this.props.history.push(`/`);
-  //       } else {
-  //         this.setState({ error: user.error });
-  //       }
-  //     });
-  // };
-
-  // findCurrentUser = () => {
-  //   return fetch(`${url}/current_user`, {
-  //     headers: {
-  //       "content-type": "application/json",
-  //       accept: "application/json",
-  //       Authorization: this.parseJwt(localStorage.getItem("jwt")).user_id
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(json =>
-  //       this.setState({ authorization: { user: json, isLoggedIn: true } })
-  //     );
-  // };
-  //
-  // parseJwt(token) {
-  //   const base64Url = token.split(".")[1];
-  //   const base64 = base64Url.replace("-", "+").replace("_", "/");
-  //   return JSON.parse(window.atob(base64));
-  // }
-  //
   handleLogout() {
     this.props.logoutUser(this.state, this.props.history);
   }
+
+  componentDidMount = () => {
+    console.log("comp did mount", this.props);
+    this.props.households();
+    if (localStorage.token !== "undefined") {
+      this.props.checkUser(this.state, this.props.history);
+    }
+  };
 
   render() {
     const { activeItem } = this.state;
@@ -95,7 +54,13 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={() => <Container loggedIn={this.props.loggedIn} />}
+          render={() =>
+            this.props.loggedIn ? (
+              <Container loggedIn={this.props.loggedIn} />
+            ) : (
+              <Login />
+            )
+          }
         />
         <Route exact path="/create" render={() => <CreateUser />} />
       </div>

@@ -11,3 +11,20 @@ export function onLogin(form) {
     body: JSON.stringify(form.fields)
   }).then(res => res.json());
 }
+
+export function fetchUser(token) {
+  if (token !== "") {
+    return fetch(`${url}/current_user`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        token: token
+      }
+    }).then(res => res.json());
+  }
+}
+
+export function getHouseholds() {
+  return fetch(`${url}/households`).then(res => res.json());
+}
