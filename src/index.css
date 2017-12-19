@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#root > div > div.ui.stackable.menu {
+  /* background-color: red; */
+}
+
+body > div,
+body > div > div,
+body > div > div > div.login-form {
+  height: 100%;
+}
