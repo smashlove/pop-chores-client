@@ -76,12 +76,8 @@ class CreateUser extends Component {
 
     return (
       <Segment attached="bottom">
-        <div className="login-form">
-          <Grid
-            textAlign="center"
-            style={{ height: "90%" }}
-            verticalAlign="top-middle"
-          >
+        <div className="create-form">
+          <Grid textAlign="center" style={{ height: "10%" }}>
             <Grid.Column style={{ maxWidth: 450 }}>
               <Header as="h2" color="teal" textAlign="center">
                 Create an Account

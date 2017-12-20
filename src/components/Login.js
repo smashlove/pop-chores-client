@@ -42,11 +42,7 @@ class Login extends Component {
     return (
       <Segment attached="bottom">
         <div className="login-form">
-          <Grid
-            textAlign="center"
-            style={{ height: "100%" }}
-            verticalAlign="middle"
-          >
+          <Grid textAlign="center" style={{ height: "100%" }}>
             <Grid.Column style={{ maxWidth: 450 }}>
               <Header as="h2" color="teal" textAlign="center">
                 {/* <Image src="#" />*/} Login to your account
