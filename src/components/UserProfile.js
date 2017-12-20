@@ -8,7 +8,9 @@ import {
   Icon,
   Grid,
   Menu,
-  Input
+  Input,
+  Form,
+  Button
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
@@ -16,15 +18,95 @@ import { connect } from "react-redux";
 class UserProfile extends Component {
   constructor() {
     super();
+
+    this.state = {
+      activeItem: "my chores",
+      title: "",
+      point_value: "",
+      description: "",
+      image_url: ""
+    };
   }
-  state = { activeItem: "my chores" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  handleTab = () => {};
+  handleTab = () => {
+    switch (this.state.activeItem) {
+      case "my chores":
+        return this.myChores();
+      case "my activity":
+        return this.myActivity();
+      case "add new chore":
+        return this.addNewChore();
+    }
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleChoreSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
+  };
+
+  addNewChore = () => {
+    return (
+      <Segment>
+        <Grid
+          textAlign="center"
+          style={{ height: "100%" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column style={{ maxWidth: 550 }}>
+            <Form onSubmit={this.handleChoreSubmit}>
+              <Segment stacked>
+                <Form.Input
+                  name="title"
+                  placeholder="Title"
+                  onChange={this.handleChange}
+                />
+
+                <Form.Input
+                  name="point_value"
+                  type="number"
+                  placeholder="Point Value"
+                  onChange={this.handleChange}
+                />
+                <Form.TextArea
+                  name="description"
+                  placeholder="Description"
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  icon={{ name: "photo" }}
+                  iconPosition="left"
+                  name="image_url"
+                  placeholder="Image URL"
+                  onChange={this.handleChange}
+                />
+                <Form.Button content="Add" color="teal" />
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    );
+  };
+
+  myChores = () => {
+    return <Segment>chores</Segment>;
+  };
+
+  myActivity = () => {
+    return <Segment>activity</Segment>;
+  };
 
   render() {
     const { activeItem } = this.state;
+
+    const tabContent = this.handleTab();
+
     return (
       <Grid>
         <Grid.Row>
@@ -70,22 +152,13 @@ class UserProfile extends Component {
                     <Input
                       transparent
                       icon={{ name: "search", link: true }}
-                      placeholder="Search chores..."
+                      placeholder="Search..."
                     />
                   </Menu.Item>
                 </Menu.Menu>
               </Menu>
 
-              <Segment attached="bottom">
-                <Grid>
-                  <Grid.Row>
-                    <Segment.Group horizontal>
-                      <Segment>ToDo</Segment>
-                      <Segment>Available</Segment>
-                    </Segment.Group>
-                  </Grid.Row>
-                </Grid>
-              </Segment>
+              <Segment attached="bottom">{tabContent}</Segment>
             </Segment.Group>
           </Grid.Column>
         </Grid.Row>

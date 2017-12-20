@@ -75,84 +75,86 @@ class CreateUser extends Component {
     ];
 
     return (
-      <div className="login-form">
-        <Grid
-          textAlign="center"
-          style={{ height: "90%" }}
-          verticalAlign="top-middle"
-        >
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="teal" textAlign="center">
-              Create an Account
-            </Header>
-            <Form
-              size="large"
-              onSubmit={() =>
-                this.props.createUser(this.state, this.props.history)
-              }
-            >
-              <Segment stacked>
-                <Form.Input
-                  fluid
-                  name="first_name"
-                  placeholder="First Name"
-                  type="text"
-                  onChange={this.handleChange}
-                  value={this.state.first_name}
-                />{" "}
-                <Form.Input
-                  fluid
-                  name="last_name"
-                  placeholder="Last Name"
-                  type="text"
-                  onChange={this.handleChange}
-                  value={this.state.last_name}
-                />
-                <Form.Input
-                  fluid
-                  icon="user"
-                  iconPosition="left"
-                  placeholder="Username"
-                  name="username"
-                  onChange={this.handleChange}
-                  value={this.state.username}
-                />
-                <Form.Input
-                  fluid
-                  icon="lock"
-                  name="password"
-                  iconPosition="left"
-                  placeholder="Password"
-                  type="password"
-                  onChange={this.handleChange}
-                  value={this.state.password}
-                />
-                <Form.Input
-                  action={
-                    <Dropdown
-                      button
-                      basic
-                      floating
-                      options={options}
-                      onChange={this.handleDropdown}
-                      value={this.state.household_action}
-                      name="household_action"
-                    />
-                  }
-                  name="household"
-                  onChange={this.handleSearch}
-                  icon="search"
-                  iconPosition="left"
-                  placeholder="Search households..."
-                />
-                <Button color="teal" fluid size="large">
-                  Submit
-                </Button>
-              </Segment>
-            </Form>
-          </Grid.Column>
-        </Grid>
-      </div>
+      <Segment attached="bottom">
+        <div className="login-form">
+          <Grid
+            textAlign="center"
+            style={{ height: "90%" }}
+            verticalAlign="top-middle"
+          >
+            <Grid.Column style={{ maxWidth: 450 }}>
+              <Header as="h2" color="teal" textAlign="center">
+                Create an Account
+              </Header>
+              <Form
+                size="large"
+                onSubmit={() =>
+                  this.props.createUser(this.state, this.props.history)
+                }
+              >
+                <Segment stacked>
+                  <Form.Input
+                    fluid
+                    name="first_name"
+                    placeholder="First Name"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={this.state.first_name}
+                  />{" "}
+                  <Form.Input
+                    fluid
+                    name="last_name"
+                    placeholder="Last Name"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={this.state.last_name}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="user"
+                    iconPosition="left"
+                    placeholder="Username"
+                    name="username"
+                    onChange={this.handleChange}
+                    value={this.state.username}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="lock"
+                    name="password"
+                    iconPosition="left"
+                    placeholder="Password"
+                    type="password"
+                    onChange={this.handleChange}
+                    value={this.state.password}
+                  />
+                  <Form.Input
+                    action={
+                      <Dropdown
+                        button
+                        basic
+                        floating
+                        options={options}
+                        onChange={this.handleDropdown}
+                        value={this.state.household_action}
+                        name="household_action"
+                      />
+                    }
+                    name="household"
+                    onChange={this.handleSearch}
+                    icon="search"
+                    iconPosition="left"
+                    placeholder="Search households..."
+                  />
+                  <Button color="teal" fluid size="large">
+                    Submit
+                  </Button>
+                </Segment>
+              </Form>
+            </Grid.Column>
+          </Grid>
+        </div>
+      </Segment>
     );
   }
 }

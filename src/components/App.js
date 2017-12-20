@@ -57,6 +57,7 @@ class App extends Component {
         />
         <Switch>
           <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/create" render={() => <CreateUser />} />
           <Route
             path="/"
             render={() =>
@@ -67,7 +68,6 @@ class App extends Component {
               )
             }
           />
-          <Route exact path="/create" render={() => <CreateUser />} />
         </Switch>
       </div>
     );
