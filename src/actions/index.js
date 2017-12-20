@@ -8,7 +8,7 @@ export function loginUser(user_params, history) {
       } else {
         localStorage.setItem("token", data["token"]);
         dispatch({ type: GET_USER, payload: data });
-        history.push("/");
+        history.push("/profile");
       }
     });
   };
@@ -35,7 +35,7 @@ export function logoutUser(user_params, history) {
   };
 }
 
-export function households(user_params, history) {
+export function fetchHouseholds(user_params, history) {
   return function(dispatch) {
     getHouseholds().then(data => {
       if (data.error) {

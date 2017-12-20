@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class Navbar extends Component {
@@ -9,12 +9,17 @@ class Navbar extends Component {
         {this.props.loggedIn ? (
           <Menu stackable>
             <Menu.Item>
-              <img src="#" />
+              <img
+                src="https://i3.silhcdn.com/3/i/shapes/lg/1/2/d8521.jpg"
+                alt="PopChores"
+                style={{ marginRight: "1em" }}
+              />
+              <strong>PopChores</strong>
             </Menu.Item>
 
             <Menu.Item
               name="profile"
-              active={this.props.activeItem === "my-profile"}
+              active={this.props.activeItem === "profile"}
               onClick={this.props.handleItemClick}
             >
               My Profile
@@ -31,16 +36,26 @@ class Navbar extends Component {
               name="sign-out"
               onClick={this.props.handleItemClick}
               active={this.propsactiveItem === "sign-out"}
+              position="right"
             >
               Sign-out
             </Menu.Item>
           </Menu>
         ) : (
           <Menu stackable>
+            <Menu.Item>
+              <img
+                src="https://i3.silhcdn.com/3/i/shapes/lg/1/2/d8521.jpg"
+                alt="PopChores"
+                style={{ marginRight: "1em" }}
+              />
+              <strong>PopChores</strong>
+            </Menu.Item>
             <Menu.Item
               name="sign-in"
               active={this.propsactiveItem === "sign-in"}
               onClick={this.props.handleItemClick}
+              position="right"
             >
               Sign-in
             </Menu.Item>

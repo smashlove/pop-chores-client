@@ -9,11 +9,12 @@ import {
   Form,
   Grid,
   Header,
-  Image,
-  Message,
   Segment,
+  Dropdown,
   Input,
-  Dropdown
+  Select,
+  Search,
+  Image
 } from "semantic-ui-react";
 
 class CreateUser extends Component {
@@ -24,7 +25,11 @@ class CreateUser extends Component {
       first_name: "",
       last_name: "",
       username: "",
-      password: ""
+      password: "",
+      household: "",
+      household_action: "Join",
+      household_id: "",
+      results: []
     };
   }
 
@@ -33,17 +38,52 @@ class CreateUser extends Component {
       [e.target.name]: e.target.value
     });
   };
+
+  handleSearch = e => {
+    this.setState({ household: e.target.value }, () =>
+      this.setState(
+        {
+          results: this.props.households.households.filter(household =>
+            household.name.toLowerCase().includes(this.state.household)
+          )
+        },
+        this.changeAction
+      )
+    );
+  };
+
+  changeAction = () => {
+    console.log(this.state.results.length);
+    if (this.state.results.length === 0) {
+      this.setState({ household_action: "Create" });
+    } else {
+      this.setState({
+        household_action: "Join",
+        household_id: this.state.results[0].id
+      });
+    }
+  };
+
+  // handleDropdown = (e, data) => {
+  //   this.setState({ household_action: data.value.toLowerCase() });
+  // };
+
   render() {
+    const options = [
+      { text: "Join", key: 0, value: "Join" },
+      { text: "Create", key: "create", value: "Create" }
+    ];
+
     return (
       <div className="login-form">
         <Grid
           textAlign="center"
-          style={{ height: "100%" }}
-          verticalAlign="middle"
+          style={{ height: "90%" }}
+          verticalAlign="top-middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="orange" textAlign="center">
-              {/* <Image src="#" />*/} Create an Account
+            <Header as="h2" color="teal" textAlign="center">
+              Create an Account
             </Header>
             <Form
               size="large"
@@ -87,14 +127,25 @@ class CreateUser extends Component {
                   onChange={this.handleChange}
                   value={this.state.password}
                 />
-                {/* <Dropdown
-                  placeholder="Select Household"
-                  fluid
-                  search
-                  selection
-                  options={this.props.households}
-                /> */}
-                <Button color="orange" fluid size="large">
+                <Form.Input
+                  action={
+                    <Dropdown
+                      button
+                      basic
+                      floating
+                      options={options}
+                      onChange={this.handleDropdown}
+                      value={this.state.household_action}
+                      name="household_action"
+                    />
+                  }
+                  name="household"
+                  onChange={this.handleSearch}
+                  icon="search"
+                  iconPosition="left"
+                  placeholder="Search households..."
+                />
+                <Button color="teal" fluid size="large">
                   Submit
                 </Button>
               </Segment>

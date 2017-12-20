@@ -12,6 +12,7 @@ export default function users(state = defaultState, action) {
         id: action.payload.user.id,
         points: action.payload.user.points,
         username: action.payload.user.username,
+        profile_pic: action.payload.user.profile_pic,
         loggedIn: true
       };
     case LOGOUT_USER:

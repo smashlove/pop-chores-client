@@ -4,9 +4,13 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Household extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
-    console.log(this.props);
-    return <div>Household</div>;
+    console.log(this.props.households);
+    return <div>house</div>;
   }
 }
 
@@ -16,4 +20,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Household);
+export default withRouter(connect(mapStateToProps, null)(Household));

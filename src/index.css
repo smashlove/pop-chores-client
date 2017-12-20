@@ -13,3 +13,7 @@ body > div > div,
 body > div > div > div.login-form {
   height: 100%;
 }
+
+#root > div > div:nth-child(1) > div {
+  margin-bottom: 1%;
+}

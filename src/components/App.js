@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+// import { Menu } from "semantic-ui-react";
 
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
-import withAuth from "./withAuth.js";
+// import withAuth from "./withAuth.js";
 import { connect } from "react-redux";
 
 import Navbar from "./Navbar";
@@ -27,6 +27,12 @@ class App extends Component {
     if (name === "sign-out") {
       this.handleLogout();
     }
+    if (name === "profile") {
+      this.props.history.push("/profile");
+    }
+    if (name === "household") {
+      this.props.history.push("/household");
+    }
   };
 
   handleLogout() {
@@ -34,8 +40,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    console.log("comp did mount", this.props);
-    this.props.households();
+    this.props.fetchHouseholds(this.state, this.props.history);
     if (localStorage.token !== undefined) {
       this.props.checkUser(this.state, this.props.history);
     }
@@ -71,7 +76,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     users: state.users,
-    loggedIn: state.users.loggedIn
+    loggedIn: state.users.loggedIn,
+    state: state
   };
 };
 

@@ -8,7 +8,6 @@ import {
   Form,
   Grid,
   Header,
-  Image,
   Message,
   Segment
 } from "semantic-ui-react";
@@ -48,7 +47,7 @@ class Login extends Component {
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="orange" textAlign="center">
+            <Header as="h2" color="teal" textAlign="center">
               {/* <Image src="#" />*/} Login to your account
             </Header>
             <Form onSubmit={this.handleSubmit} size="large">
@@ -73,7 +72,7 @@ class Login extends Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color="orange" fluid size="large">
+                <Button color="teal" fluid size="large">
                   Login
                 </Button>
               </Segment>
