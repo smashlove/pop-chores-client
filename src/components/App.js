@@ -7,7 +7,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Navbar from "./Navbar";
-import Container from "./Container";
+import MainContainer from "./MainContainer";
 import CreateUser from "./CreateUser";
 import Login from "./Login";
 import * as actions from "../actions/index";
@@ -55,19 +55,20 @@ class App extends Component {
           activeItem={activeItem}
           handleItemClick={this.handleItemClick}
         />
-        <Route exact path="/login" render={() => <Login />} />
-        <Route
-          exact
-          path="/"
-          render={() =>
-            this.props.loggedIn ? (
-              <Container loggedIn={this.props.loggedIn} />
-            ) : (
-              <Login />
-            )
-          }
-        />
-        <Route exact path="/create" render={() => <CreateUser />} />
+        <Switch>
+          <Route exact path="/login" render={() => <Login />} />
+          <Route
+            path="/"
+            render={() =>
+              this.props.loggedIn ? (
+                <MainContainer loggedIn={this.props.loggedIn} />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route exact path="/create" render={() => <CreateUser />} />
+        </Switch>
       </div>
     );
   }

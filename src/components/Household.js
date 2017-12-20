@@ -10,7 +10,7 @@ class Household extends Component {
 
   render() {
     console.log(this.props.households);
-    return <div>house</div>;
+    return <div>household</div>;
   }
 }
 
