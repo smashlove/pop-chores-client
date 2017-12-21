@@ -12,6 +12,7 @@ import {
   Form,
   Button
 } from "semantic-ui-react";
+import * as actions from "../actions/index";
 
 import { connect } from "react-redux";
 
@@ -24,7 +25,8 @@ class UserProfile extends Component {
       title: "",
       point_value: "",
       description: "",
-      image_url: ""
+      image_url: "",
+      available: true
     };
   }
 
@@ -47,7 +49,7 @@ class UserProfile extends Component {
 
   handleChoreSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.createChore(this.state, this.props.history, this.props.user);
   };
 
   addNewChore = () => {
@@ -102,6 +104,10 @@ class UserProfile extends Component {
     return <Segment>activity</Segment>;
   };
 
+  componentDidMount = () => {
+    this.props.fetchChores(this.props.user, this.props.history);
+  };
+
   render() {
     const { activeItem } = this.state;
 
@@ -110,8 +116,8 @@ class UserProfile extends Component {
     return (
       <Grid>
         <Grid.Row>
-          <Grid.Column width={3}>
-            <Segment>
+          <Grid.Column width={4} align="center">
+            <Segment compact>
               <Card>
                 <Image src={this.props.user.profile_pic} />
                 <Card.Content>
@@ -129,8 +135,8 @@ class UserProfile extends Component {
               </Card>
             </Segment>
           </Grid.Column>
-          <Grid.Column width={13}>
-            <Segment.Group vertical>
+          <Grid.Column width={10}>
+            <Segment.Group>
               <Menu attached="top" tabular>
                 <Menu.Item
                   name="my chores"
@@ -168,11 +174,10 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     households: state.households,
     user: state.users
   };
 };
 
-export default withRouter(connect(mapStateToProps, null)(UserProfile));
+export default withRouter(connect(mapStateToProps, actions)(UserProfile));

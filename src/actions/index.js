@@ -1,5 +1,19 @@
-import { GET_USER, LOGOUT_USER, GET_HOUSEHOLDS, CREATE_USER } from "./types";
-import { onLogin, getHouseholds, fetchUser, onCreate } from "../api/index";
+import {
+  GET_USER,
+  LOGOUT_USER,
+  GET_HOUSEHOLDS,
+  CREATE_USER,
+  CREATE_CHORE,
+  GET_CHORES
+} from "./types";
+import {
+  onLogin,
+  getHouseholds,
+  fetchUser,
+  onCreate,
+  onCreateChore,
+  getChores
+} from "../api/index";
 
 export function loginUser(user_params, history) {
   return function(dispatch) {
@@ -32,6 +46,33 @@ export function logoutUser(user_params, history) {
     localStorage.removeItem("token");
     dispatch({ type: LOGOUT_USER });
     history.push("/login");
+  };
+}
+
+export function createChore(chore_params, history, user_params) {
+  return function(dispatch) {
+    onCreateChore(chore_params, user_params).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        console.log(data);
+        dispatch({ type: CREATE_CHORE, payload: data });
+        history.push("/household");
+      }
+    });
+  };
+}
+
+export function fetchChores(user_params, history) {
+  console.log("fetchChores", user_params);
+  return function(dispatch) {
+    getChores(user_params.user_household[0].id).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch({ type: GET_CHORES, payload: data });
+      }
+    });
   };
 }
 

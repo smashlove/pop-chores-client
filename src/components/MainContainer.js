@@ -7,7 +7,6 @@ import { Image, Container, Segment } from "semantic-ui-react";
 
 class MainContainer extends Component {
   render() {
-    console.log(this.props);
     return (
       <Segment attached="bottom">
         <Route exact path="/household" render={() => <Household />} />
