@@ -31,6 +31,17 @@ export function onCreateChore(chore_params, user_params) {
   }).then(res => res.json());
 }
 
+export function onUpdateChore(chore_params, user_params) {
+  return fetch(`${url}/chores/${chore_params.id}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      ...chore_params,
+      user_id: user_params.id
+    })
+  }).then(res => res.json());
+}
+
 export function getChores(household_id) {
   return fetch(`${url}/chores/${household_id}`).then(res => res.json());
 }

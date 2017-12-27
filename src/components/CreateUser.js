@@ -10,11 +10,7 @@ import {
   Grid,
   Header,
   Segment,
-  Dropdown,
-  Input,
-  Select,
-  Search,
-  Image
+  Dropdown
 } from "semantic-ui-react";
 
 class CreateUser extends Component {

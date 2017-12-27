@@ -3,9 +3,9 @@ import { GET_USER, LOGOUT_USER } from "../actions/types";
 const defaultState = { loggedIn: false };
 
 export default function users(state = defaultState, action) {
-  console.log(action.payload);
   switch (action.type) {
     case GET_USER:
+      console.log("users", action.payload);
       return {
         ...state,
         first_name: action.payload.first_name,
@@ -14,7 +14,8 @@ export default function users(state = defaultState, action) {
         points: action.payload.points,
         username: action.payload.username,
         profile_pic: action.payload.profile_pic,
-        user_household: action.payload.households,
+        user_household: action.payload.households[0],
+        chores: action.payload.chores,
         loggedIn: true
       };
     case LOGOUT_USER:

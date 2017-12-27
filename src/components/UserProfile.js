@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import AvailableChoreCard from "./AvailableChoreCard";
+import UnavailableChoreCard from "./UnavailableChoreCard";
+import MyChoreCard from "./MyChoreCard";
+
 import {
   Image,
-  Container,
   Segment,
   Card,
-  Icon,
   Grid,
   Menu,
   Input,
   Form,
-  Button
+  Header
 } from "semantic-ui-react";
 import * as actions from "../actions/index";
 
@@ -30,7 +32,21 @@ class UserProfile extends Component {
     };
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+    this.props.history.push(
+      `/profile/${name
+        .split("")
+        .map(char => {
+          if (char === " ") {
+            return "-";
+          } else {
+            return char;
+          }
+        })
+        .join("")}`
+    );
+  };
 
   handleTab = () => {
     switch (this.state.activeItem) {
@@ -38,7 +54,7 @@ class UserProfile extends Component {
         return this.myChores();
       case "my activity":
         return this.myActivity();
-      case "add new chore":
+      case "add personal chore":
         return this.addNewChore();
     }
   };
@@ -55,6 +71,9 @@ class UserProfile extends Component {
   addNewChore = () => {
     return (
       <Segment>
+        <Header as="h2" color="teal" textAlign="center">
+          Add a Personal Chore
+        </Header>
         <Grid
           textAlign="center"
           style={{ height: "100%" }}
@@ -97,11 +116,28 @@ class UserProfile extends Component {
   };
 
   myChores = () => {
-    return <Segment>chores</Segment>;
+    return (
+      <Segment>
+        <Card.Group>{this.createChores()}</Card.Group>
+      </Segment>
+    );
   };
 
   myActivity = () => {
     return <Segment>activity</Segment>;
+  };
+
+  createChores = () => {
+    return this.props.user.chores.map(chore => {
+      return (
+        <MyChoreCard
+          chore={chore}
+          key={chore.id}
+          updateChore={this.props.updateChore}
+          user={this.props.user}
+        />
+      );
+    });
   };
 
   componentDidMount = () => {
@@ -109,6 +145,8 @@ class UserProfile extends Component {
   };
 
   render() {
+    console.log(this.props);
+
     const { activeItem } = this.state;
 
     const tabContent = this.handleTab();
@@ -135,7 +173,7 @@ class UserProfile extends Component {
               </Card>
             </Segment>
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={11}>
             <Segment.Group>
               <Menu attached="top" tabular>
                 <Menu.Item
@@ -149,8 +187,8 @@ class UserProfile extends Component {
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item
-                  name="add new chore"
-                  active={activeItem === "add new chore"}
+                  name="add personal chore"
+                  active={activeItem === "add personal chore"}
                   onClick={this.handleItemClick}
                 />
                 <Menu.Menu position="right">

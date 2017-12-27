@@ -3,18 +3,40 @@ import withAuth from "./withAuth";
 import Household from "./Household";
 import UserProfile from "./UserProfile";
 import { Route, withRouter } from "react-router-dom";
-import { Image, Container, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
+import { connect } from "react-redux";
+import * as actions from "../actions/index";
 
 class MainContainer extends Component {
+  componentDidMount = () => {
+    this.props.checkUser(this.state, this.props.history);
+  };
   render() {
+    console.log(this.props);
     return (
       <Segment attached="bottom">
-        <Route exact path="/household" render={() => <Household />} />
-        <Route exact path="/profile" render={() => <UserProfile />} />
-        <Route exact path="/" render={() => <UserProfile />} />
+        {this.props.user ? (
+          <div>
+            <Route path="/household" render={() => <Household />} />
+            <Route path="/profile" render={() => <UserProfile />} />
+            <Route exact path="/" render={() => <UserProfile />} />
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </Segment>
     );
   }
 }
 
-export default withAuth(withRouter(MainContainer));
+const mapStateToProps = state => {
+  return {
+    user: state.users,
+    households: state.households,
+    chores: state.chores
+  };
+};
+
+export default withAuth(
+  withRouter(connect(mapStateToProps, actions)(MainContainer))
+);

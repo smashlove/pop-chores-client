@@ -9,3 +9,5 @@ export const GET_HOUSEHOLDS = "GET_HOUSEHOLDS";
 export const CREATE_CHORE = "CREATE_CHORE";
 
 export const GET_CHORES = "GET_CHORES";
+
+export const UPDATE_CHORE = "UPDATE_CHORE";

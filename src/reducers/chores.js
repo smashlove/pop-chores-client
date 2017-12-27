@@ -10,6 +10,7 @@ export default function chores(state = defaultState, action) {
         chores: action.payload
       };
     case GET_CHORES:
+      console.log(action.payload);
       return {
         ...state,
         household_chores: action.payload

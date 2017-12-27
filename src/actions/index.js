@@ -4,7 +4,8 @@ import {
   GET_HOUSEHOLDS,
   CREATE_USER,
   CREATE_CHORE,
-  GET_CHORES
+  GET_CHORES,
+  UPDATE_CHORE
 } from "./types";
 import {
   onLogin,
@@ -12,7 +13,8 @@ import {
   fetchUser,
   onCreate,
   onCreateChore,
-  getChores
+  getChores,
+  onUpdateChore
 } from "../api/index";
 
 export function loginUser(user_params, history) {
@@ -55,7 +57,6 @@ export function createChore(chore_params, history, user_params) {
       if (data.error) {
         console.log(data.error);
       } else {
-        console.log(data);
         dispatch({ type: CREATE_CHORE, payload: data });
         history.push("/household");
       }
@@ -63,10 +64,21 @@ export function createChore(chore_params, history, user_params) {
   };
 }
 
-export function fetchChores(user_params, history) {
-  console.log("fetchChores", user_params);
+export function updateChore(chore_params, user_params) {
   return function(dispatch) {
-    getChores(user_params.user_household[0].id).then(data => {
+    onUpdateChore(chore_params, user_params).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch({ type: UPDATE_CHORE, payload: data });
+      }
+    });
+  };
+}
+
+export function fetchChores(user_params, history) {
+  return function(dispatch) {
+    getChores(user_params.user_household.id).then(data => {
       if (data.error) {
         console.log(data.error);
       } else {
