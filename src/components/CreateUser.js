@@ -49,7 +49,6 @@ class CreateUser extends Component {
   };
 
   changeAction = () => {
-    console.log(this.state.results.length);
     if (this.state.results.length === 0) {
       this.setState({ household_action: "Create" });
     } else {

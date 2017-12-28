@@ -2,16 +2,11 @@ import React, { Component } from "react";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 
 class MyChoreCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleComplete = e => {
     this.props.updateChore(this.props.chore, this.props.user);
   };
 
   render() {
-    console.log(this.props.user);
     return (
       <Card>
         <Card.Content>

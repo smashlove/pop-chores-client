@@ -12,7 +12,6 @@ class MainContainer extends Component {
     this.props.checkUser(this.state, this.props.history);
   };
   render() {
-    console.log(this.props);
     return (
       <Segment attached="bottom">
         {this.props.user ? (

@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 
 class UnavailableChoreCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Card>

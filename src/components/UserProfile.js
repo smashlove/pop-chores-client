@@ -57,6 +57,8 @@ class UserProfile extends Component {
         return this.myActivity();
       case "add chore":
         return this.addNewChore();
+      default:
+        return null;
     }
   };
 
@@ -77,7 +79,7 @@ class UserProfile extends Component {
   };
 
   addNewChore = () => {
-    const { activeItem, value } = this.state;
+    const { value } = this.state;
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">

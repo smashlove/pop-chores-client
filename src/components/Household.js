@@ -28,9 +28,10 @@ class Household extends Component {
     return this.props.chores.household_chores.map(chore => {
       if (chore.available) {
         return <AvailableChoreCard chore={chore} key={chore.id} />;
-      }
-      if (!chore.available) {
+      } else if (!chore.available) {
         return <UnavailableChoreCard chore={chore} key={chore.id} />;
+      } else {
+        return null;
       }
     });
   };
@@ -62,7 +63,7 @@ class Household extends Component {
   };
 
   addChore = () => {
-    const { activeItem, value } = this.state;
+    const { value } = this.state;
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">

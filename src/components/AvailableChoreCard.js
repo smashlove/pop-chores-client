@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 
 class AvailableChoreCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClaim = () => {};
 
   render() {
