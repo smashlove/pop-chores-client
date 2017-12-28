@@ -28,7 +28,8 @@ class UserProfile extends Component {
       point_value: "",
       description: "",
       image_url: "",
-      available: true
+      available: true,
+      personal_chore: false
     };
   }
 
@@ -54,7 +55,7 @@ class UserProfile extends Component {
         return this.myChores();
       case "my activity":
         return this.myActivity();
-      case "add personal chore":
+      case "add chore":
         return this.addNewChore();
     }
   };
@@ -68,11 +69,19 @@ class UserProfile extends Component {
     this.props.createChore(this.state, this.props.history, this.props.user);
   };
 
+  handleRadio = (e, { value }) => {
+    this.setState({ value });
+    if (value === "personal") {
+      this.setState({ chore_owner: this.props.user.id, personal_chore: true });
+    }
+  };
+
   addNewChore = () => {
+    const { activeItem, value } = this.state;
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">
-          Add a Personal Chore
+          Add a Chore
         </Header>
         <Grid
           textAlign="center"
@@ -106,6 +115,20 @@ class UserProfile extends Component {
                   placeholder="Image URL"
                   onChange={this.handleChange}
                 />
+                <Form.Group inline>
+                  <Form.Radio
+                    label="Personal"
+                    value="personal"
+                    checked={value === "personal"}
+                    onChange={this.handleRadio}
+                  />
+                  <Form.Radio
+                    label="Household"
+                    value="household"
+                    checked={value === "household"}
+                    onChange={this.handleRadio}
+                  />
+                </Form.Group>
                 <Form.Button content="Add" color="teal" />
               </Segment>
             </Form>
@@ -145,8 +168,6 @@ class UserProfile extends Component {
   };
 
   render() {
-    console.log(this.props);
-
     const { activeItem } = this.state;
 
     const tabContent = this.handleTab();
@@ -187,8 +208,8 @@ class UserProfile extends Component {
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item
-                  name="add personal chore"
-                  active={activeItem === "add personal chore"}
+                  name="add chore"
+                  active={activeItem === "add chore"}
                   onClick={this.handleItemClick}
                 />
                 <Menu.Menu position="right">

@@ -47,18 +47,26 @@ class Household extends Component {
         return <div>2</div>;
       case "scoreboard":
         return <div>3</div>;
-      case "add household chore":
+      case "add chore":
         return this.addChore();
       default:
         return this.allChores();
     }
   };
 
+  handleRadio = (e, { value }) => {
+    this.setState({ value });
+    if (value === "personal") {
+      this.setState({ chore_owner: this.props.user.id, personal_chore: true });
+    }
+  };
+
   addChore = () => {
+    const { activeItem, value } = this.state;
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">
-          Add a Household Chore
+          Add a Chore
         </Header>
         <Grid
           textAlign="center"
@@ -92,6 +100,20 @@ class Household extends Component {
                   placeholder="Image URL"
                   onChange={this.handleChange}
                 />
+                <Form.Group inline>
+                  <Form.Radio
+                    label="Personal"
+                    value="personal"
+                    checked={value === "personal"}
+                    onChange={this.handleRadio}
+                  />
+                  <Form.Radio
+                    label="Household"
+                    value="household"
+                    checked={value === "household"}
+                    onChange={this.handleRadio}
+                  />
+                </Form.Group>
                 <Form.Button content="Add" color="teal" />
               </Segment>
             </Form>
@@ -132,8 +154,8 @@ class Household extends Component {
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item
-                  name="add household chore"
-                  active={activeItem === "add household chore"}
+                  name="add chore"
+                  active={activeItem === "add chore"}
                   onClick={this.handleItemClick}
                 />
                 <Menu.Menu position="right">
