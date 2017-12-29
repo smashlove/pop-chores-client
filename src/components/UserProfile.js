@@ -165,10 +165,6 @@ class UserProfile extends Component {
     });
   };
 
-  componentDidMount = () => {
-    this.props.fetchChores(this.props.user, this.props.history);
-  };
-
   render() {
     const { activeItem } = this.state;
 

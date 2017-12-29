@@ -29,6 +29,7 @@ class MainContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     user: state.users,
     households: state.households,

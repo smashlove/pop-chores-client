@@ -24,6 +24,7 @@ export function loginUser(user_params, history) {
       } else {
         localStorage.setItem("token", data["token"]);
         dispatch({ type: GET_USER, payload: data });
+        dispatch({ type: GET_CHORES, payload: data });
         history.push("/profile");
       }
     });
@@ -107,6 +108,7 @@ export function checkUser(user_params, history) {
         if (data.error) {
         } else {
           dispatch({ type: GET_USER, payload: data });
+          dispatch({ type: GET_CHORES, payload: data });
           history.push("/");
         }
       });

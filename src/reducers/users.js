@@ -8,14 +8,18 @@ export default function users(state = defaultState, action) {
       console.log("users", action.payload);
       return {
         ...state,
-        first_name: action.payload.first_name,
-        last_name: action.payload.last_name,
-        id: action.payload.id,
-        points: action.payload.points,
-        username: action.payload.username,
-        profile_pic: action.payload.profile_pic,
+        first_name: action.payload.user.first_name,
+        last_name: action.payload.user.last_name,
+        id: action.payload.user.id,
+        points: action.payload.user.points,
+        username: action.payload.user.username,
+        profile_pic: action.payload.user.profile_pic,
         user_household: action.payload.households[0],
         chores: action.payload.chores,
+        personal_chores: action.payload.chores.filter(
+          chore => chore.chore_owner === action.payload.user.id
+        ),
+        user_chores: action.payload.user_chores,
         loggedIn: true
       };
     case LOGOUT_USER:

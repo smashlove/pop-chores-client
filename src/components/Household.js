@@ -26,7 +26,7 @@ class Household extends Component {
 
   createChores = () => {
     return this.props.chores.household_chores.map(chore => {
-      if (chore.available) {
+      if (chore.available && chore.personal_chore !== true) {
         return <AvailableChoreCard chore={chore} key={chore.id} />;
       } else if (!chore.available) {
         return <UnavailableChoreCard chore={chore} key={chore.id} />;

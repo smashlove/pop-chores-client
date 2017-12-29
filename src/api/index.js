@@ -43,7 +43,7 @@ export function onUpdateChore(chore_params, user_params) {
 }
 
 export function getChores(household_id) {
-  return fetch(`${url}/chores/${household_id}`).then(res => res.json());
+  return fetch(`${url}/households/${household_id}`).then(res => res.json());
 }
 
 export function fetchUser(token) {
