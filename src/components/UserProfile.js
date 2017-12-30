@@ -152,11 +152,8 @@ class UserProfile extends Component {
   myActivity = () => {
     return (
       <Segment>
-        <ActivityFeed />
+        <ActivityFeed type="user" user={this.props.user} />
       </Segment>
-      // <Segment>
-      //   <Card.Group>{this.createActivity()}</Card.Group>
-      // </Segment>
     );
   };
 

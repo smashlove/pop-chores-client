@@ -14,9 +14,7 @@ class FeedEvent extends Component {
 
       hours =
         hours < 24
-          ? hours > 1
-            ? hours + " hours ago"
-            : "less than " + hours + " hour ago"
+          ? hours > 1 ? hours + " hours ago" : "less than " + 1 + " hour ago"
           : hours / 24 + (hours / 24 > 1 ? " days ago" : " day ago");
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -24,6 +22,15 @@ class FeedEvent extends Component {
       return hours;
     }
     return msToTime(c);
+  };
+
+  handleUpdateChore = () => {
+    this.props.updateChore(
+      this.props.event,
+      this.props.user,
+      "like",
+      this.props.history
+    );
   };
 
   render() {
@@ -35,14 +42,18 @@ class FeedEvent extends Component {
         </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
-            <Feed.User>@{this.props.user.username}</Feed.User> completed the
-            chore {this.props.event.title}
-            <Feed.Date>{this.getTime(this.props.event.updated_at)}</Feed.Date>
+            <Feed.User>
+              {this.props.event.user_id === this.props.loggedInUser
+                ? "You "
+                : `@${this.props.user.username}`}
+            </Feed.User>{" "}
+            completed the chore <a>{this.props.event.title}</a>
+            <Feed.Date>{this.getTime(this.props.event.completed_at)}</Feed.Date>
           </Feed.Summary>
           <Feed.Meta>
             <Feed.Like>
-              <Icon name="like" />
-              4 Likes
+              <Icon name="like" onClick={this.handleUpdateChore} />
+              {this.props.event.likes} Likes
             </Feed.Like>
           </Feed.Meta>
         </Feed.Content>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import AvailableChoreCard from "./AvailableChoreCard";
+import ActivityFeed from "./ActivityFeed";
 import UnavailableChoreCard from "./UnavailableChoreCard";
 import {
   Segment,
@@ -67,7 +68,11 @@ class Household extends Component {
       case "chores":
         return this.allChores();
       case "activity":
-        return <div>2</div>;
+        return (
+          <Segment>
+            <ActivityFeed type="household" user={this.props.user} />
+          </Segment>
+        );
       case "scoreboard":
         return <div>3</div>;
       case "add chore":

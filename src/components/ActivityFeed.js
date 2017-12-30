@@ -6,23 +6,60 @@ import * as actions from "../actions/index";
 import FeedEvent from "./FeedEvent";
 
 class ActivityFeed extends Component {
+  constructor() {
+    super();
+
+    this.state = { limit: 15 };
+  }
+
   createFeed = () => {
-    console.log(this.props);
-    return this.props.all_activity.map(event => {
-      return (
-        <FeedEvent
-          event={event}
-          key={event.created_at}
-          user={this.props.users.filter(user => user.id === event.user_id)[0]}
-        />
-      );
-    });
+    const limit = this.state.limit;
+
+    if (this.props.type === "household") {
+      return this.props.all_activity.slice(0, limit).map(event => {
+        return (
+          <FeedEvent
+            event={event}
+            key={event.created_at}
+            user={this.props.users.filter(user => user.id === event.user_id)[0]}
+            updateChore={this.props.updateChore}
+            loggedInUser={this.props.user.id}
+          />
+        );
+      });
+    }
+
+    if (this.props.type === "user") {
+      return this.props.all_activity.slice(0, limit).map(event => {
+        if (event.user_id === this.props.user.id)
+          return (
+            <FeedEvent
+              event={event}
+              key={event.created_at}
+              user={
+                this.props.users.filter(user => user.id === event.user_id)[0]
+              }
+              updateChore={this.props.updateChore}
+              loggedInUser={this.props.user.id}
+            />
+          );
+      });
+    }
   };
 
   render() {
     const all_activity = this.createFeed();
 
-    return <Feed>{all_activity}</Feed>;
+    return (
+      <Feed>
+        {all_activity}
+        <Button
+          onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+        >
+          Load more...
+        </Button>
+      </Feed>
+    );
   }
 }
 

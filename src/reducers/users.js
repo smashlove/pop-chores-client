@@ -20,10 +20,10 @@ export default function users(state = defaultState, action) {
           chore => chore.chore_owner === action.payload.user.id
         ),
         user_chores: action.payload.user_chores.sort(function(a, b) {
-          return new Date(b.updated_at) - new Date(a.updated_at);
+          return new Date(b.completed_at) - new Date(a.completed_at);
         }),
         all_activity: action.payload.all_activity.sort(function(a, b) {
-          return new Date(b.updated_at) - new Date(a.updated_at);
+          return new Date(b.completed_at) - new Date(a.completed_at);
         }),
         loggedIn: true
       };
