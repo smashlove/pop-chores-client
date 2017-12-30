@@ -45,7 +45,7 @@ const mapStateToProps = state => {
   return {
     households: state.households,
     user: state.users,
-    chores: state.chores
+    user_chores: state.user_chores.filter(chore => chore.complete === true)
   };
 };
 

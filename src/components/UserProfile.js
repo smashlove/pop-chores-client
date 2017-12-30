@@ -149,27 +149,68 @@ class UserProfile extends Component {
   };
 
   myActivity = () => {
-    return <Segment>activity</Segment>;
+    return (
+      <Segment>
+        <Card.Group>{this.createActivity()}</Card.Group>
+      </Segment>
+    );
+  };
+
+  createActivity = () => {
+    return this.props.user.user_chores.map(chore => {
+      if (chore.complete === true) {
+        return (
+          <UnavailableChoreCard
+            chore={chore}
+            key={chore.id}
+            button="Completed"
+          />
+        );
+      }
+    });
   };
 
   createChores = () => {
-    return this.props.user.chores.map(chore => {
-      return (
-        <MyChoreCard
-          chore={chore}
-          key={chore.id}
-          updateChore={this.props.updateChore}
-          user={this.props.user}
-        />
-      );
+    return this.props.user.user_chores.map(chore => {
+      if (chore.complete !== true) {
+        return (
+          <MyChoreCard
+            chore={chore}
+            key={chore.id}
+            updateChore={this.props.updateChore}
+            user={this.props.user}
+            checkUser={this.props.checkUser}
+          />
+        );
+      }
+    });
+  };
+
+  createPersonalChores = () => {
+    return this.props.personal_chores.map(chore => {
+      if (chore.available === true) {
+        return (
+          <Segment key={chore.id}>
+            <AvailableChoreCard
+              chore={chore}
+              updateChore={this.props.updateChore}
+              checkUser={this.props.checkUser}
+              user={this.props.user}
+              button="Add"
+            />
+          </Segment>
+        );
+      }
     });
   };
 
   render() {
     const { activeItem } = this.state;
 
-    const tabContent = this.handleTab();
+    const personalChores = this.createPersonalChores();
 
+    const tabContent = this.handleTab();
+    console.log(this.props);
     return (
       <Grid>
         <Grid.Row>
@@ -225,6 +266,7 @@ class UserProfile extends Component {
             </Segment.Group>
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row>{personalChores}</Grid.Row>
       </Grid>
     );
   }
@@ -233,7 +275,10 @@ class UserProfile extends Component {
 const mapStateToProps = state => {
   return {
     households: state.households,
-    user: state.users
+    user: state.users,
+    chores: state.users.chores,
+    personal_chores: state.users.personal_chores,
+    user_chores: state.users.user_chores
   };
 };
 

@@ -2,7 +2,16 @@ import React, { Component } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 
 class AvailableChoreCard extends Component {
-  handleClaim = () => {};
+  handleClaim = () => {
+    console.log(this.props);
+    this.props.updateChore(
+      this.props.chore,
+      this.props.user,
+      "add",
+      this.props.history
+    );
+    this.props.checkUser(this.props.user, this.props.history);
+  };
 
   render() {
     return (
@@ -16,7 +25,7 @@ class AvailableChoreCard extends Component {
         <Card.Content extra>
           <div className="ui two buttons">
             <Button onClick={this.handleClaim} basic color="green">
-              Claim
+              {this.props.button}
             </Button>
             <Button basic>
               <strong>Points: {this.props.chore.point_value}</strong>

@@ -3,7 +3,12 @@ import { Card, Image, Button, Icon } from "semantic-ui-react";
 
 class MyChoreCard extends Component {
   handleComplete = e => {
-    this.props.updateChore(this.props.chore, this.props.user);
+    this.props.updateChore(
+      this.props.chore,
+      this.props.user,
+      "complete",
+      this.props.history
+    );
   };
 
   render() {

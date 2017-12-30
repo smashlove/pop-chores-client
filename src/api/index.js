@@ -31,13 +31,14 @@ export function onCreateChore(chore_params, user_params) {
   }).then(res => res.json());
 }
 
-export function onUpdateChore(chore_params, user_params) {
+export function onUpdateChore(chore_params, user_params, type) {
   return fetch(`${url}/chores/${chore_params.id}`, {
     method: "POST",
     headers,
     body: JSON.stringify({
       ...chore_params,
-      user_id: user_params.id
+      user_id: user_params.id,
+      type: type
     })
   }).then(res => res.json());
 }

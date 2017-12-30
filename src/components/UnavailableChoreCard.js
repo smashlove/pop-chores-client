@@ -14,7 +14,7 @@ class UnavailableChoreCard extends Component {
         <Card.Content extra>
           <div className="ui two buttons">
             <Button disabled basic color="grey">
-              Assigned
+              {this.props.button}
             </Button>
             <Button basic>
               <strong>Points: {this.props.chore.point_value}</strong>

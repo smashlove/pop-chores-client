@@ -1,4 +1,4 @@
-import { CREATE_CHORE, GET_CHORES } from "../actions/types";
+import { CREATE_CHORE, GET_CHORES, UPDATE_CHORE } from "../actions/types";
 
 const defaultState = {};
 
@@ -8,7 +8,13 @@ export default function chores(state = defaultState, action) {
       console.log("Create chore", action.payload);
       return {
         ...state,
-        chores: action.payload
+        household_chores: action.payload.chores
+      };
+    case UPDATE_CHORE:
+      console.log("Update chore", action.payload);
+      return {
+        ...state,
+        household_chores: action.payload.chores
       };
     case GET_CHORES:
       return {

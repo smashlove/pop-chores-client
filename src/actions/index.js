@@ -65,13 +65,14 @@ export function createChore(chore_params, history, user_params) {
   };
 }
 
-export function updateChore(chore_params, user_params) {
+export function updateChore(chore_params, user_params, type, history) {
   return function(dispatch) {
-    onUpdateChore(chore_params, user_params).then(data => {
+    onUpdateChore(chore_params, user_params, type).then(data => {
       if (data.error) {
         console.log(data.error);
       } else {
         dispatch({ type: UPDATE_CHORE, payload: data });
+        dispatch({ type: GET_USER, payload: data });
       }
     });
   };
@@ -109,7 +110,6 @@ export function checkUser(user_params, history) {
         } else {
           dispatch({ type: GET_USER, payload: data });
           dispatch({ type: GET_CHORES, payload: data });
-          history.push("/");
         }
       });
     };
