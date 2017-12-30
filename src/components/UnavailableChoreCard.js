@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Button } from "semantic-ui-react";
+import { Card, Image, Button, Feed } from "semantic-ui-react";
 
 class UnavailableChoreCard extends Component {
   render() {
@@ -8,8 +8,16 @@ class UnavailableChoreCard extends Component {
         <Card.Content>
           <Image floated="left" size="small" src={this.props.chore.image_url} />
           <Card.Header>{this.props.chore.title}</Card.Header>
-          <Card.Meta> {this.props.chore.description}</Card.Meta>
           <Card.Description />
+          {this.props.button === "Assigned" ? (
+            <Card.Meta>
+              Currently assigned to @{this.props.user.username}
+            </Card.Meta>
+          ) : (
+            <Card.Meta>
+              Completed on {this.props.chore.date_completed}
+            </Card.Meta>
+          )}
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">

@@ -37,15 +37,13 @@ class CreateUser extends Component {
 
   handleSearch = e => {
     this.setState({ household: e.target.value }, () =>
-      this.setState(
-        {
-          results: this.props.households.households.filter(household =>
-            household.name.toLowerCase().includes(this.state.household)
-          )
-        },
-        this.changeAction
-      )
-    );
+      this.setState({
+        results: this.props.households.households.filter(household =>
+          household.name.toLowerCase().includes(this.state.household)
+        )
+      })
+    ),
+      this.changeAction();
   };
 
   changeAction = () => {
@@ -64,6 +62,7 @@ class CreateUser extends Component {
   // };
 
   render() {
+    console.log(this.props);
     const options = [
       { text: "Join", key: 0, value: "Join" },
       { text: "Create", key: "create", value: "Create" }

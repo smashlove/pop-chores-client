@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import AvailableChoreCard from "./AvailableChoreCard";
 import UnavailableChoreCard from "./UnavailableChoreCard";
 import MyChoreCard from "./MyChoreCard";
+import ActivityFeed from "./ActivityFeed";
 
 import {
   Image,
@@ -151,8 +152,11 @@ class UserProfile extends Component {
   myActivity = () => {
     return (
       <Segment>
-        <Card.Group>{this.createActivity()}</Card.Group>
+        <ActivityFeed />
       </Segment>
+      // <Segment>
+      //   <Card.Group>{this.createActivity()}</Card.Group>
+      // </Segment>
     );
   };
 
@@ -164,6 +168,7 @@ class UserProfile extends Component {
             chore={chore}
             key={chore.id}
             button="Completed"
+            user={this.props.user}
           />
         );
       }

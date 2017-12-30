@@ -19,7 +19,12 @@ export default function users(state = defaultState, action) {
         personal_chores: action.payload.chores.filter(
           chore => chore.chore_owner === action.payload.user.id
         ),
-        user_chores: action.payload.user_chores,
+        user_chores: action.payload.user_chores.sort(function(a, b) {
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        }),
+        all_activity: action.payload.all_activity.sort(function(a, b) {
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        }),
         loggedIn: true
       };
     case LOGOUT_USER:

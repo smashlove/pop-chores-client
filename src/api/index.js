@@ -26,7 +26,8 @@ export function onCreateChore(chore_params, user_params) {
     headers,
     body: JSON.stringify({
       ...chore_params,
-      household_id: user_params.user_household.id
+      household_id: user_params.user_household.id,
+      user_id: user_params.id
     })
   }).then(res => res.json());
 }

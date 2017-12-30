@@ -20,7 +20,13 @@ class Household extends Component {
     super();
 
     this.state = {
-      activeItem: "chores"
+      activeItem: "chores",
+      title: "",
+      point_value: "",
+      description: "",
+      image_url: "",
+      available: true,
+      personal_chore: false
     };
   }
 
@@ -37,12 +43,13 @@ class Household extends Component {
             checkUser={this.props.checkUser}
           />
         );
-      } else if (!chore.available) {
+      } else if (!chore.available && chore.personal_chore !== true) {
         return (
           <UnavailableChoreCard
             chore={chore}
             key={chore.id}
             button="Assigned"
+            user={this.props.user}
           />
         );
       } else {
@@ -75,6 +82,10 @@ class Household extends Component {
     if (value === "personal") {
       this.setState({ chore_owner: this.props.user.id, personal_chore: true });
     }
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   addChore = () => {
@@ -142,6 +153,11 @@ class Household extends Component {
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
     this.props.history.push(`/household/${name}`);
+  };
+
+  handleChoreSubmit = e => {
+    e.preventDefault();
+    this.props.createChore(this.state, this.props.history, this.props.user);
   };
 
   render() {
