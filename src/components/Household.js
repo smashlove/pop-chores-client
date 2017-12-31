@@ -83,9 +83,19 @@ class Household extends Component {
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
-    this.props.history.push(`/household/${name}`);
+    this.props.history.push(
+      `/household/${name
+        .split("")
+        .map(char => {
+          if (char === " ") {
+            return "-";
+          } else {
+            return char;
+          }
+        })
+        .join("")}`
+    );
   };
-
   render() {
     const { activeItem } = this.state;
     const tabContent = this.handleTab();

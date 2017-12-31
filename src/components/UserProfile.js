@@ -48,6 +48,8 @@ class UserProfile extends Component {
             tab="my chores"
           />
         );
+      case "personal chores":
+        return this.myPersonalChores();
       default:
         return null;
     }
@@ -71,6 +73,10 @@ class UserProfile extends Component {
         <ActivityFeed type="user" user={this.props.user} />
       </Segment>
     );
+  };
+
+  myPersonalChores = () => {
+    return <Card.Group>{this.createPersonalChores()}</Card.Group>;
   };
 
   createChores = () => {
@@ -114,8 +120,6 @@ class UserProfile extends Component {
   render() {
     const { activeItem } = this.state;
 
-    const personalChores = this.createPersonalChores();
-
     const tabContent = this.handleTab();
 
     return (
@@ -149,6 +153,11 @@ class UserProfile extends Component {
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item
+                  name="personal chores"
+                  active={activeItem === "personal chores"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
                   name="my activity"
                   active={activeItem === "my activity"}
                   onClick={this.handleItemClick}
@@ -157,7 +166,7 @@ class UserProfile extends Component {
                   name="add chore"
                   active={activeItem === "add chore"}
                   onClick={this.handleItemClick}
-                />
+                />{" "}
                 <Menu.Menu position="right">
                   <Menu.Item>
                     <Input
@@ -173,9 +182,7 @@ class UserProfile extends Component {
             </Segment.Group>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Card.Group>{personalChores}</Card.Group>
-        </Grid.Row>
+        <Grid.Row />
       </Grid>
     );
   }
