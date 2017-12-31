@@ -1,7 +1,24 @@
 import React, { Component } from "react";
-import { Card, Image, Button, Icon } from "semantic-ui-react";
+import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
+import EditCard from "./EditCard";
 
 class MyChoreCard extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      edit: false
+    };
+  }
+
+  handleEdit = () => {
+    this.edit();
+  };
+
+  edit = () => {
+    this.setState({ edit: !this.state.edit });
+  };
+
   handleComplete = e => {
     this.props.updateChore(
       this.props.chore,
@@ -12,8 +29,7 @@ class MyChoreCard extends Component {
   };
 
   render() {
-    console.log(this.props);
-    return (
+    return !this.state.edit ? (
       <Card>
         <Card.Content>
           <Image floated="left" size="small" src={this.props.chore.image_url} />
@@ -37,8 +53,24 @@ class MyChoreCard extends Component {
               <strong>Points: {this.props.chore.points}</strong>
             </Button>
           </div>
+          <Label
+            attached="top right"
+            icon="edit"
+            corner
+            as="a"
+            size="mini"
+            onClick={this.edit}
+          />
         </Card.Content>
       </Card>
+    ) : (
+      <EditCard
+        chore={this.props.chore}
+        edit={this.handleEdit}
+        user={this.props.user}
+        history={this.props.history}
+        updateChore={this.props.updateChore}
+      />
     );
   }
 }

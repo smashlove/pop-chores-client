@@ -5,7 +5,6 @@ const defaultState = { loggedIn: false };
 export default function users(state = defaultState, action) {
   switch (action.type) {
     case GET_USER:
-      console.log("users", action.payload);
       return {
         ...state,
         first_name: action.payload.user.first_name,
@@ -15,7 +14,9 @@ export default function users(state = defaultState, action) {
         username: action.payload.user.username,
         profile_pic: action.payload.user.profile_pic,
         user_household: action.payload.households[0],
-        chores: action.payload.chores.reverse(),
+        chores: action.payload.chores.sort(function(a, b) {
+          return b.available - a.available;
+        }),
         personal_chores: action.payload.chores.filter(
           chore => chore.chore_owner === action.payload.user.id
         ),
@@ -26,8 +27,8 @@ export default function users(state = defaultState, action) {
           return (
             (b.completed_at
               ? new Date(b.completed_at)
-              : new Date(b.created_at)) -
-            (a.completed_at ? new Date(a.completed_at) : new Date(a.created_at))
+              : new Date(b.claimed_at)) -
+            (a.completed_at ? new Date(a.completed_at) : new Date(a.claimed_at))
           );
         }),
         loggedIn: true

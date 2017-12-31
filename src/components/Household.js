@@ -3,16 +3,8 @@ import { withRouter } from "react-router-dom";
 import AvailableChoreCard from "./AvailableChoreCard";
 import ActivityFeed from "./ActivityFeed";
 import UnavailableChoreCard from "./UnavailableChoreCard";
-import {
-  Segment,
-  Card,
-  Grid,
-  Menu,
-  Input,
-  Form,
-  Header,
-  Dropdown
-} from "semantic-ui-react";
+import NewChoreForm from "./NewChoreForm";
+import { Segment, Card, Grid, Menu, Input } from "semantic-ui-react";
 
 import { connect } from "react-redux";
 import * as actions from "../actions/index";
@@ -22,27 +14,21 @@ class Household extends Component {
     super();
 
     this.state = {
-      activeItem: "chores",
-      title: "",
-      point_value: "",
-      description: "",
-      image_url: "",
-      available: true,
-      personal_chore: false
+      activeItem: "chores"
     };
   }
 
   createChores = () => {
-    return this.props.chores.household_chores.map(chore => {
+    return this.props.chores.map(chore => {
       if (chore.available && chore.personal_chore !== true) {
         return (
           <AvailableChoreCard
             chore={chore}
             key={chore.id}
             button="Claim"
-            updateChore={this.props.updateChore}
             user={this.props.user}
-            checkUser={this.props.checkUser}
+            edit={this.props.edit}
+            updateChore={this.props.updateChore}
           />
         );
       } else if (!chore.available && chore.personal_chore !== true) {
@@ -52,6 +38,8 @@ class Household extends Component {
             key={chore.id}
             button="Assigned"
             user={this.props.user}
+            edit={this.props.edit}
+            updateChore={this.props.updateChore}
           />
         );
       } else {
@@ -77,16 +65,9 @@ class Household extends Component {
       case "scoreboard":
         return <div>3</div>;
       case "add chore":
-        return this.addChore();
+        return <NewChoreForm />;
       default:
         return this.allChores();
-    }
-  };
-
-  handleRadio = (e, { value }) => {
-    this.setState({ value });
-    if (value === "personal") {
-      this.setState({ chore_owner: this.props.user.id, personal_chore: true });
     }
   };
 
@@ -94,90 +75,9 @@ class Household extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleDropdown = (e, data) => {
-    this.setState({ point_value: data.value });
-  };
-
-  addChore = () => {
-    const { value } = this.state;
-    const options = [
-      { key: 1, text: "5", value: 5 },
-      { key: 2, text: "10", value: 10 },
-      { key: 3, text: "15", value: 15 },
-      { key: 4, text: "20", value: 20 }
-    ];
-    return (
-      <Segment>
-        <Header as="h2" color="teal" textAlign="center">
-          Add a Chore
-        </Header>
-        <Grid
-          textAlign="center"
-          style={{ height: "100%" }}
-          verticalAlign="middle"
-        >
-          <Grid.Column style={{ maxWidth: 550 }}>
-            <Form onSubmit={this.handleChoreSubmit}>
-              <Segment stacked>
-                <Form.Input
-                  name="title"
-                  placeholder="Title"
-                  onChange={this.handleChange}
-                />
-
-                <Form.TextArea
-                  name="description"
-                  placeholder="Description"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  icon={{ name: "photo" }}
-                  iconPosition="left"
-                  name="image_url"
-                  placeholder="Image URL"
-                  onChange={this.handleChange}
-                />
-                <Form.Group inline>
-                  <Form.Radio
-                    label="Personal"
-                    value="personal"
-                    checked={value === "personal"}
-                    onChange={this.handleRadio}
-                  />
-                  <Form.Radio
-                    label="Household"
-                    value="household"
-                    checked={value === "household"}
-                    onChange={this.handleRadio}
-                  />
-                  <Dropdown
-                    placeholder="Select Point Value"
-                    name="point_value"
-                    options={options}
-                    button
-                    basic
-                    floating
-                    selection
-                    onChange={this.handleDropdown}
-                    value={this.state.point_value}
-                  />
-                </Form.Group>
-                <Form.Button content="Add" color="teal" />
-              </Segment>
-            </Form>
-          </Grid.Column>
-        </Grid>
-      </Segment>
-    );
-  };
-
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
     this.props.history.push(`/household/${name}`);
-  };
-
-  handleChoreSubmit = e => {
-    this.props.createChore(this.state, this.props.history, this.props.user);
   };
 
   render() {
@@ -235,7 +135,7 @@ const mapStateToProps = state => {
   return {
     user: state.users,
     households: state.households,
-    chores: state.chores
+    chores: state.users.chores
   };
 };
 

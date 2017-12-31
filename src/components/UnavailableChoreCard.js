@@ -1,10 +1,26 @@
 import React, { Component } from "react";
-import { Card, Image, Button, Feed, Label } from "semantic-ui-react";
+import { Card, Image, Button, Label } from "semantic-ui-react";
+import EditCard from "./EditCard";
 
 class UnavailableChoreCard extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      edit: false
+    };
+  }
+
+  handleEdit = () => {
+    this.edit();
+  };
+
+  edit = () => {
+    this.setState({ edit: !this.state.edit });
+  };
+
   render() {
-    console.log(this.props);
-    return (
+    return !this.state.edit ? (
       <Card>
         <Card.Content>
           <Image floated="left" size="small" src={this.props.chore.image_url} />
@@ -29,8 +45,25 @@ class UnavailableChoreCard extends Component {
               <strong>Points: {this.props.chore.point_value}</strong>
             </Button>
           </div>
+          <Label
+            attached="top right"
+            icon="edit"
+            corner
+            as="a"
+            size="mini"
+            onClick={this.edit}
+          />
         </Card.Content>
       </Card>
+    ) : (
+      <EditCard
+        chore={this.props.chore}
+        edit={this.handleEdit}
+        user={this.props.user}
+        history={this.props.history}
+        updateChore={this.props.updateChore}
+        delete="false"
+      />
     );
   }
 }

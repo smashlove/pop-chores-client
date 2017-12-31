@@ -34,7 +34,6 @@ class FeedEvent extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <Feed.Event>
         <Feed.Label>
