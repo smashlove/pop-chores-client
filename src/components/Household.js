@@ -52,6 +52,10 @@ class Household extends Component {
     return <Card.Group>{this.createChores()}</Card.Group>;
   };
 
+  handleAddReload = tab => {
+    this.setState({ activeItem: tab });
+  };
+
   handleTab = () => {
     switch (this.state.activeItem) {
       case "chores":
@@ -65,7 +69,9 @@ class Household extends Component {
       case "scoreboard":
         return <div>3</div>;
       case "add chore":
-        return <NewChoreForm />;
+        return (
+          <NewChoreForm handleAddReload={this.handleAddReload} tab="chores" />
+        );
       default:
         return this.allChores();
     }

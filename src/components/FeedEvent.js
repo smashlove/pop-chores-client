@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Button, Feed, Icon } from "semantic-ui-react";
+import { Card, Image, Button, Feed, Icon, Popup } from "semantic-ui-react";
 
 class FeedEvent extends Component {
   getTime = time => {
@@ -50,6 +50,7 @@ class FeedEvent extends Component {
               ? " completed the chore "
               : " claimed the chore "}
             <a>{this.props.event.title}</a>
+
             <Feed.Date>{this.getTime(this.props.event.completed_at)}</Feed.Date>
           </Feed.Summary>
           <Feed.Meta>

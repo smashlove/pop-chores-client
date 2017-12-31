@@ -42,7 +42,12 @@ class UserProfile extends Component {
       case "my activity":
         return this.myActivity();
       case "add chore":
-        return <NewChoreForm />;
+        return (
+          <NewChoreForm
+            handleAddReload={this.handleAddReload}
+            tab="my chores"
+          />
+        );
       default:
         return null;
     }
@@ -82,6 +87,10 @@ class UserProfile extends Component {
         );
       }
     });
+  };
+
+  handleAddReload = tab => {
+    this.setState({ activeItem: tab });
   };
 
   createPersonalChores = () => {

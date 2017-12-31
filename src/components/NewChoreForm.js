@@ -40,6 +40,7 @@ class NewChoreForm extends Component {
 
   handleChoreSubmit = e => {
     this.props.createChore(this.state, this.props.history, this.props.user);
+    this.props.handleAddReload(this.props.tab);
   };
 
   handleDropdown = (e, data) => {
