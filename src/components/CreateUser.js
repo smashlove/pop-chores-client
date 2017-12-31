@@ -57,9 +57,9 @@ class CreateUser extends Component {
     }
   };
 
-  // handleDropdown = (e, data) => {
-  //   this.setState({ household_action: data.value.toLowerCase() });
-  // };
+  handleDropdown = (e, data) => {
+    this.setState({ household_action: data.value.toLowerCase() });
+  };
 
   render() {
     console.log(this.props);

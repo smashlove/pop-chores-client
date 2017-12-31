@@ -9,7 +9,7 @@ class ActivityFeed extends Component {
   constructor() {
     super();
 
-    this.state = { limit: 15 };
+    this.state = { limit: 10 };
   }
 
   createFeed = () => {
@@ -53,11 +53,32 @@ class ActivityFeed extends Component {
     return (
       <Feed>
         {all_activity}
-        <Button
-          onClick={() => this.setState({ limit: (this.state.limit += 10) })}
-        >
-          Load more...
-        </Button>
+        {this.state.limit < 11 ? (
+          <Button
+            onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+          >
+            Load more...
+          </Button>
+        ) : (
+          <div>
+            <Button
+              icon
+              labelPosition="left"
+              onClick={() => this.setState({ limit: (this.state.limit = 10) })}
+            >
+              <Icon name="left arrow" />
+              Less
+            </Button>
+            <Button
+              icon
+              labelPosition="right"
+              onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+            >
+              More
+              <Icon name="right arrow" />
+            </Button>
+          </div>
+        )}
       </Feed>
     );
   }

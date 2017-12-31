@@ -59,7 +59,7 @@ export function createChore(chore_params, history, user_params) {
         console.log(data.error);
       } else {
         dispatch({ type: CREATE_CHORE, payload: data });
-        history.push("/household");
+        dispatch({ type: GET_USER, payload: data });
       }
     });
   };
@@ -85,6 +85,7 @@ export function fetchChores(user_params, history) {
         console.log(data.error);
       } else {
         dispatch({ type: GET_CHORES, payload: data });
+        dispatch({ type: GET_USER, payload: data });
       }
     });
   };

@@ -15,7 +15,7 @@ export default function users(state = defaultState, action) {
         username: action.payload.user.username,
         profile_pic: action.payload.user.profile_pic,
         user_household: action.payload.households[0],
-        chores: action.payload.chores,
+        chores: action.payload.chores.reverse(),
         personal_chores: action.payload.chores.filter(
           chore => chore.chore_owner === action.payload.user.id
         ),
@@ -23,7 +23,12 @@ export default function users(state = defaultState, action) {
           return new Date(b.completed_at) - new Date(a.completed_at);
         }),
         all_activity: action.payload.all_activity.sort(function(a, b) {
-          return new Date(b.completed_at) - new Date(a.completed_at);
+          return (
+            (b.completed_at
+              ? new Date(b.completed_at)
+              : new Date(b.created_at)) -
+            (a.completed_at ? new Date(a.completed_at) : new Date(a.created_at))
+          );
         }),
         loggedIn: true
       };

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Card, Image, Button, Feed } from "semantic-ui-react";
+import { Card, Image, Button, Feed, Label } from "semantic-ui-react";
 
 class UnavailableChoreCard extends Component {
   render() {
+    console.log(this.props);
     return (
       <Card>
         <Card.Content>
@@ -11,7 +12,7 @@ class UnavailableChoreCard extends Component {
           <Card.Description />
           {this.props.button === "Assigned" ? (
             <Card.Meta>
-              Currently assigned to @{this.props.user.username}
+              Currently assigned to <a>@{this.props.user.username}</a>
             </Card.Meta>
           ) : (
             <Card.Meta>

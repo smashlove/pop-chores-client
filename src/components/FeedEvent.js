@@ -46,13 +46,16 @@ class FeedEvent extends Component {
               {this.props.event.user_id === this.props.loggedInUser
                 ? "You "
                 : `@${this.props.user.username}`}
-            </Feed.User>{" "}
-            completed the chore <a>{this.props.event.title}</a>
+            </Feed.User>
+            {this.props.event.complete === true
+              ? " completed the chore "
+              : " claimed the chore "}
+            <a>{this.props.event.title}</a>
             <Feed.Date>{this.getTime(this.props.event.completed_at)}</Feed.Date>
           </Feed.Summary>
           <Feed.Meta>
-            <Feed.Like>
-              <Icon name="like" onClick={this.handleUpdateChore} />
+            <Feed.Like onClick={this.handleUpdateChore}>
+              <Icon name="like" />
               {this.props.event.likes} Likes
             </Feed.Like>
           </Feed.Meta>

@@ -10,7 +10,8 @@ import {
   Menu,
   Input,
   Form,
-  Header
+  Header,
+  Dropdown
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
@@ -93,8 +94,18 @@ class Household extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleDropdown = (e, data) => {
+    this.setState({ point_value: data.value });
+  };
+
   addChore = () => {
     const { value } = this.state;
+    const options = [
+      { key: 1, text: "5", value: 5 },
+      { key: 2, text: "10", value: 10 },
+      { key: 3, text: "15", value: 15 },
+      { key: 4, text: "20", value: 20 }
+    ];
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">
@@ -114,12 +125,6 @@ class Household extends Component {
                   onChange={this.handleChange}
                 />
 
-                <Form.Input
-                  name="point_value"
-                  type="number"
-                  placeholder="Point Value"
-                  onChange={this.handleChange}
-                />
                 <Form.TextArea
                   name="description"
                   placeholder="Description"
@@ -145,6 +150,17 @@ class Household extends Component {
                     checked={value === "household"}
                     onChange={this.handleRadio}
                   />
+                  <Dropdown
+                    placeholder="Select Point Value"
+                    name="point_value"
+                    options={options}
+                    button
+                    basic
+                    floating
+                    selection
+                    onChange={this.handleDropdown}
+                    value={this.state.point_value}
+                  />
                 </Form.Group>
                 <Form.Button content="Add" color="teal" />
               </Segment>
@@ -161,7 +177,6 @@ class Household extends Component {
   };
 
   handleChoreSubmit = e => {
-    e.preventDefault();
     this.props.createChore(this.state, this.props.history, this.props.user);
   };
 

@@ -13,7 +13,9 @@ import {
   Menu,
   Input,
   Form,
-  Header
+  Header,
+  Dropdown,
+  Label
 } from "semantic-ui-react";
 import * as actions from "../actions/index";
 
@@ -68,7 +70,6 @@ class UserProfile extends Component {
   };
 
   handleChoreSubmit = e => {
-    e.preventDefault();
     this.props.createChore(this.state, this.props.history, this.props.user);
   };
 
@@ -78,9 +79,18 @@ class UserProfile extends Component {
       this.setState({ chore_owner: this.props.user.id, personal_chore: true });
     }
   };
+  handleDropdown = (e, data) => {
+    this.setState({ point_value: data.value });
+  };
 
   addNewChore = () => {
     const { value } = this.state;
+    const options = [
+      { key: 1, text: "5", value: 5 },
+      { key: 2, text: "10", value: 10 },
+      { key: 3, text: "15", value: 15 },
+      { key: 4, text: "20", value: 20 }
+    ];
     return (
       <Segment>
         <Header as="h2" color="teal" textAlign="center">
@@ -100,12 +110,6 @@ class UserProfile extends Component {
                   onChange={this.handleChange}
                 />
 
-                <Form.Input
-                  name="point_value"
-                  type="number"
-                  placeholder="Point Value"
-                  onChange={this.handleChange}
-                />
                 <Form.TextArea
                   name="description"
                   placeholder="Description"
@@ -130,6 +134,17 @@ class UserProfile extends Component {
                     value="household"
                     checked={value === "household"}
                     onChange={this.handleRadio}
+                  />{" "}
+                  <Dropdown
+                    placeholder="Select Point Value"
+                    name="point_value"
+                    options={options}
+                    button
+                    basic
+                    floating
+                    selection
+                    onChange={this.handleDropdown}
+                    value={this.state.point_value}
                   />
                 </Form.Group>
                 <Form.Button content="Add" color="teal" />
@@ -157,20 +172,20 @@ class UserProfile extends Component {
     );
   };
 
-  createActivity = () => {
-    return this.props.user.user_chores.map(chore => {
-      if (chore.complete === true) {
-        return (
-          <UnavailableChoreCard
-            chore={chore}
-            key={chore.id}
-            button="Completed"
-            user={this.props.user}
-          />
-        );
-      }
-    });
-  };
+  // createActivity = () => {
+  //   return this.props.user.user_chores.map(chore => {
+  //     if (chore.complete === true) {
+  //       return (
+  //         <UnavailableChoreCard
+  //           chore={chore}
+  //           key={chore.id}
+  //           button="Completed"
+  //           user={this.props.user}
+  //         />
+  //       );
+  //     }
+  //   });
+  // };
 
   createChores = () => {
     return this.props.user.user_chores.map(chore => {

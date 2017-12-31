@@ -12,6 +12,7 @@ class MyChoreCard extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <Card>
         <Card.Content>
@@ -19,7 +20,7 @@ class MyChoreCard extends Component {
           <Card.Header>{this.props.chore.title}</Card.Header>
           <Card.Meta> {this.props.chore.description}</Card.Meta>
 
-          <Card.Description>{this.props.chore.id}</Card.Description>
+          <Card.Description />
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
@@ -33,7 +34,7 @@ class MyChoreCard extends Component {
               <Icon name="check" />Mark as Complete
             </Button>
             <Button size="small" basic>
-              <strong>Points: {this.props.chore.point_value}</strong>
+              <strong>Points: {this.props.chore.points}</strong>
             </Button>
           </div>
         </Card.Content>
