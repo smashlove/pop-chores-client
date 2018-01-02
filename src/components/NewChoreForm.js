@@ -4,14 +4,7 @@ import * as actions from "../actions/index";
 
 import { connect } from "react-redux";
 
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Segment,
-  Dropdown
-} from "semantic-ui-react";
+import { Form, Grid, Header, Segment, Dropdown } from "semantic-ui-react";
 
 class NewChoreForm extends Component {
   constructor() {

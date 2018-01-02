@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Button, Icon, Label, Form } from "semantic-ui-react";
+import { Card, Image, Button, Label } from "semantic-ui-react";
 import EditCard from "./EditCard";
 
 class AvailableChoreCard extends Component {

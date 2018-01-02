@@ -47,7 +47,7 @@ class ActivityFeed extends Component {
         })
         .slice(0, limit)
         .map(event => {
-          if (event.user_id === this.props.user.id)
+          if (event.user_id === this.props.user.id) {
             return (
               <FeedEvent
                 event={event}
@@ -59,6 +59,9 @@ class ActivityFeed extends Component {
                 loggedInUser={this.props.user.id}
               />
             );
+          } else {
+            return null;
+          }
         });
     }
   };
@@ -80,7 +83,7 @@ class ActivityFeed extends Component {
             <Button
               icon
               labelPosition="left"
-              onClick={() => this.setState({ limit: (this.state.limit = 10) })}
+              onClick={() => this.setState({ limit: 10 })}
             >
               <Icon name="left arrow" />
               Less

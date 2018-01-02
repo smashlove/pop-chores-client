@@ -4,9 +4,7 @@ import {
   GET_HOUSEHOLDS,
   CREATE_USER,
   CREATE_CHORE,
-  GET_CHORES,
-  UPDATE_CHORE,
-  UPDATE_USER
+  GET_CHORES
 } from "./types";
 import {
   onLogin,
