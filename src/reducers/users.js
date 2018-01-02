@@ -24,12 +24,9 @@ export default function users(state = defaultState, action) {
           return new Date(b.completed_at) - new Date(a.completed_at);
         }),
         all_activity: action.payload.all_activity.sort(function(a, b) {
-          return (
-            (b.completed_at
-              ? new Date(b.completed_at)
-              : new Date(b.claimed_at)) -
-            (a.completed_at ? new Date(a.completed_at) : new Date(a.claimed_at))
-          );
+          return b.complete
+            ? new Date(b.completed_at) - new Date(a.completed_at)
+            : new Date(b.claimed_at) - new Date(a.claimed_at);
         }),
         loggedIn: true
       };
