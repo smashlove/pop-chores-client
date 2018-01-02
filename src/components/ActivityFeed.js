@@ -68,14 +68,12 @@ class ActivityFeed extends Component {
 
   render() {
     const all_activity = this.createFeed();
-
+    let limitState = this.state.limit;
     return (
       <Feed>
         {all_activity}
-        {this.state.limit < 11 ? (
-          <Button
-            onClick={() => this.setState({ limit: (this.state.limit += 10) })}
-          >
+        {limitState < 11 ? (
+          <Button onClick={() => this.setState({ limit: (limitState += 10) })}>
             Load more...
           </Button>
         ) : (
@@ -91,7 +89,7 @@ class ActivityFeed extends Component {
             <Button
               icon
               labelPosition="right"
-              onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+              onClick={() => this.setState({ limit: (limitState += 10) })}
             >
               More
               <Icon name="right arrow" />
