@@ -14,8 +14,8 @@ import {
 } from "semantic-ui-react";
 
 class CreateUser extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       first_name: "",
@@ -25,7 +25,7 @@ class CreateUser extends Component {
       household: "",
       household_action: "Join",
       household_id: "",
-      results: []
+      results: this.props.households
     };
   }
 
@@ -38,7 +38,7 @@ class CreateUser extends Component {
   handleSearch = e => {
     this.setState({ household: e.target.value }, () =>
       this.setState({
-        results: this.props.households.households.filter(household =>
+        results: this.props.households.filter(household =>
           household.name.toLowerCase().includes(this.state.household)
         )
       })
@@ -61,8 +61,12 @@ class CreateUser extends Component {
     this.setState({ household_action: data.value.toLowerCase() });
   };
 
+  componentDidMount = () => {
+    this.props.fetchHouseholds();
+  };
+
   render() {
-    console.log(this.props);
+    console.log(this.state);
     const options = [
       { text: "Join", key: 0, value: "Join" },
       { text: "Create", key: "create", value: "Create" }
@@ -150,8 +154,9 @@ class CreateUser extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.households.households);
   return {
-    households: state.households
+    households: state.households.households
   };
 };
 

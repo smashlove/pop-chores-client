@@ -4,8 +4,17 @@ import AvailableChoreCard from "./AvailableChoreCard";
 import MyChoreCard from "./MyChoreCard";
 import NewChoreForm from "./NewChoreForm";
 import ActivityFeed from "./ActivityFeed";
+import EditUser from "./EditUser";
 
-import { Image, Segment, Card, Grid, Menu, Input } from "semantic-ui-react";
+import {
+  Image,
+  Segment,
+  Card,
+  Grid,
+  Menu,
+  Input,
+  Label
+} from "semantic-ui-react";
 import * as actions from "../actions/index";
 
 import { connect } from "react-redux";
@@ -15,9 +24,18 @@ class UserProfile extends Component {
     super();
 
     this.state = {
-      activeItem: "my chores"
+      activeItem: "my chores",
+      edit: false
     };
   }
+
+  handleEdit = () => {
+    this.edit();
+  };
+
+  edit = () => {
+    this.setState({ edit: !this.state.edit });
+  };
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
@@ -127,21 +145,38 @@ class UserProfile extends Component {
         <Grid.Row>
           <Grid.Column width={4} align="center">
             <Segment compact>
-              <Card>
-                <Image src={this.props.user.profile_pic} />
-                <Card.Content>
-                  <Card.Header>
-                    {this.props.user.first_name} {this.props.user.last_name}
-                  </Card.Header>
-                  <Card.Meta>@{this.props.user.username}</Card.Meta>
-                  <Card.Description>
-                    Cleaning up the Netflix queue.
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>{this.props.user.points} Points</a>
-                </Card.Content>
-              </Card>
+              {!this.state.edit ? (
+                <Card>
+                  <Image src={this.props.user.profile_pic} />
+                  <Card.Content>
+                    <Card.Header>
+                      {this.props.user.first_name} {this.props.user.last_name}
+                    </Card.Header>
+                    <Card.Meta>@{this.props.user.username}</Card.Meta>
+                    <Card.Description>
+                      Cleaning up the Netflix queue.
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <a>{this.props.user.points} Points</a>
+                  </Card.Content>{" "}
+                  <Label
+                    attached="top right"
+                    icon="edit"
+                    corner
+                    as="a"
+                    size="mini"
+                    onClick={this.edit}
+                  />
+                </Card>
+              ) : (
+                <EditUser
+                  edit={this.handleEdit}
+                  user={this.props.user}
+                  history={this.props.history}
+                  updateUser={this.props.updateUser}
+                />
+              )}
             </Segment>
           </Grid.Column>
           <Grid.Column width={11}>

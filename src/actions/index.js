@@ -5,7 +5,8 @@ import {
   CREATE_USER,
   CREATE_CHORE,
   GET_CHORES,
-  UPDATE_CHORE
+  UPDATE_CHORE,
+  UPDATE_USER
 } from "./types";
 import {
   onLogin,
@@ -14,7 +15,8 @@ import {
   onCreate,
   onCreateChore,
   getChores,
-  onUpdateChore
+  onUpdateChore,
+  onUpdateUser
 } from "../api/index";
 
 export function loginUser(user_params, history) {
@@ -24,7 +26,6 @@ export function loginUser(user_params, history) {
       } else {
         localStorage.setItem("token", data["token"]);
         dispatch({ type: GET_USER, payload: data });
-        dispatch({ type: GET_CHORES, payload: data });
         history.push("/profile");
       }
     });
@@ -71,7 +72,20 @@ export function updateChore(chore_params, user_params, type, history) {
       if (data.error) {
         console.log(data.error);
       } else {
-        dispatch({ type: UPDATE_CHORE, payload: data });
+        dispatch({ type: GET_CHORES, payload: data });
+        dispatch({ type: GET_USER, payload: data });
+      }
+    });
+  };
+}
+
+export function updateUser(user_input, user_params, type) {
+  return function(dispatch) {
+    onUpdateUser(user_input, user_params, type).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch({ type: GET_CHORES, payload: data });
         dispatch({ type: GET_USER, payload: data });
       }
     });
@@ -91,7 +105,7 @@ export function fetchChores(user_params, history) {
   };
 }
 
-export function fetchHouseholds(user_params, history) {
+export function fetchHouseholds() {
   return function(dispatch) {
     getHouseholds().then(data => {
       if (data.error) {
@@ -110,7 +124,6 @@ export function checkUser(user_params, history) {
         if (data.error) {
         } else {
           dispatch({ type: GET_USER, payload: data });
-          dispatch({ type: GET_CHORES, payload: data });
         }
       });
     };

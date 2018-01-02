@@ -11,3 +11,5 @@ export const CREATE_CHORE = "CREATE_CHORE";
 export const GET_CHORES = "GET_CHORES";
 
 export const UPDATE_CHORE = "UPDATE_CHORE";
+
+export const UPDATE_USER = "UPDATE_USER";

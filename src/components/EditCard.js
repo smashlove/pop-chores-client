@@ -14,6 +14,7 @@ class EditCard extends Component {
     super(props);
 
     this.state = {
+      chore_id: props.chore.chore_id,
       id: props.chore.id,
       title: props.chore.title,
       point_value: props.chore.point_value,
@@ -73,11 +74,7 @@ class EditCard extends Component {
               <Form.Input
                 name="description"
                 size="mini"
-                placeholder={
-                  this.props.chore.description !== ""
-                    ? this.props.chore.description
-                    : "Description"
-                }
+                placeholder={"Description"}
                 value={this.state.description}
                 onChange={this.handleChange}
               />

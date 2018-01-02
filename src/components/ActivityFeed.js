@@ -16,22 +16,14 @@ class ActivityFeed extends Component {
     const limit = this.state.limit;
 
     if (this.props.type === "household") {
-      return this.props.all_activity.slice(0, limit).map(event => {
-        return (
-          <FeedEvent
-            event={event}
-            key={event.created_at}
-            user={this.props.users.filter(user => user.id === event.user_id)[0]}
-            updateChore={this.props.updateChore}
-            loggedInUser={this.props.user.id}
-          />
-        );
-      });
-    }
-
-    if (this.props.type === "user") {
-      return this.props.all_activity.slice(0, limit).map(event => {
-        if (event.user_id === this.props.user.id)
+      return this.props.all_activity
+        .sort(function(a, b) {
+          return b.complete === true
+            ? new Date(b.completed_at) - new Date(a.completed_at)
+            : new Date(b.claimed_at) - new Date(a.claimed_at);
+        })
+        .slice(0, limit)
+        .map(event => {
           return (
             <FeedEvent
               event={event}
@@ -43,7 +35,31 @@ class ActivityFeed extends Component {
               loggedInUser={this.props.user.id}
             />
           );
-      });
+        });
+    }
+
+    if (this.props.type === "user") {
+      return this.props.all_activity
+        .sort(function(a, b) {
+          return b.complete === true
+            ? new Date(b.completed_at) - new Date(a.completed_at)
+            : new Date(b.claimed_at) - new Date(a.claimed_at);
+        })
+        .slice(0, limit)
+        .map(event => {
+          if (event.user_id === this.props.user.id)
+            return (
+              <FeedEvent
+                event={event}
+                key={event.created_at}
+                user={
+                  this.props.users.filter(user => user.id === event.user_id)[0]
+                }
+                updateChore={this.props.updateChore}
+                loggedInUser={this.props.user.id}
+              />
+            );
+        });
     }
   };
 

@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    this.props.fetchHouseholds(this.state, this.props.history);
+    this.props.fetchHouseholds();
     if (localStorage.token !== undefined) {
       this.props.checkUser(this.state, this.props.history);
     }
@@ -56,8 +56,16 @@ class App extends Component {
           handleItemClick={this.handleItemClick}
         />
         <Switch>
-          <Route exact path="/login" render={() => <Login />} />
-          <Route exact path="/create" render={() => <CreateUser />} />
+          <Route
+            exact
+            path="/login"
+            render={() => <Login households={this.props.households} />}
+          />
+          <Route
+            exact
+            path="/create"
+            render={() => <CreateUser households={this.props.households} />}
+          />
           <Route
             path="/"
             render={() =>
@@ -78,7 +86,8 @@ const mapStateToProps = state => {
   return {
     users: state.users,
     loggedIn: state.users.loggedIn,
-    state: state
+    state: state,
+    households: state.households.households
   };
 };
 

@@ -44,6 +44,18 @@ export function onUpdateChore(chore_params, user_params, type) {
   }).then(res => res.json());
 }
 
+export function onUpdateUser(user_input, user_params, type) {
+  return fetch(`${url}/users/${user_params.id}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      ...user_input,
+      user_id: user_params.id,
+      type
+    })
+  }).then(res => res.json());
+}
+
 export function getChores(household_id) {
   return fetch(`${url}/households/${household_id}`).then(res => res.json());
 }

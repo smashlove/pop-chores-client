@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Image, Button, Feed, Icon, Popup } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 class FeedEvent extends Component {
   getTime = time => {
@@ -34,6 +35,7 @@ class FeedEvent extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <Feed.Event>
         <Feed.Label>
@@ -65,4 +67,10 @@ class FeedEvent extends Component {
   }
 }
 
-export default FeedEvent;
+const mapStateToProps = state => {
+  return {
+    user: state.users
+  };
+};
+
+export default connect(mapStateToProps, null)(FeedEvent);

@@ -9,6 +9,7 @@ import * as actions from "../actions/index";
 
 class MainContainer extends Component {
   componentDidMount = () => {
+    this.props.fetchHouseholds();
     this.props.checkUser(this.state, this.props.history);
   };
 
@@ -32,6 +33,7 @@ class MainContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     user: state.users,
     households: state.households,
