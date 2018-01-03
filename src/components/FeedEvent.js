@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Feed, Icon, Modal, Header, Image } from "semantic-ui-react";
+import { Feed, Icon, Modal, Header, Image, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class FeedEvent extends Component {
@@ -35,13 +35,14 @@ class FeedEvent extends Component {
     );
   };
 
+  checkModal = (e, data) => {
+    console.log(e.target, data.value);
+  };
+
   render() {
-    console.log(this.props);
-    const currentChore = this.props.stateUser.chores.filter(
+    let currentChore = this.props.stateUser.chores.filter(
       chore => chore.id === this.props.event.chore_id
     )[0];
-    console.log(currentChore);
-
     return (
       <Feed.Event>
         <Feed.Label>
@@ -50,9 +51,28 @@ class FeedEvent extends Component {
         <Feed.Content>
           <Feed.Summary>
             <Feed.User>
-              {this.props.event.user_id === this.props.loggedInUser
-                ? "You "
-                : `@${this.props.user.username}`}
+              {this.props.event.user_id === this.props.loggedInUser ? (
+                "You "
+              ) : (
+                <Modal
+                  style={{ height: "10%" }}
+                  size="mini"
+                  trigger={<a>@{this.props.user.username}</a>}
+                  header={`${this.props.user.first_name} ${
+                    this.props.user.last_name
+                  }`}
+                  content={`@${this.props.user.username} currently has ${
+                    this.props.user.points
+                  } points.`}
+                  actions={[
+                    {
+                      key: "Nice!",
+                      content: "Nice!",
+                      positive: true
+                    }
+                  ]}
+                />
+              )}
             </Feed.User>
             {this.props.event.complete === true
               ? " completed the chore "
@@ -60,32 +80,27 @@ class FeedEvent extends Component {
             {this.props.event.personal_chore ? (
               this.props.event.title + " (personal chore)"
             ) : (
-              <Modal trigger={<a>{this.props.event.title}</a>}>
-                <Modal.Header>{currentChore.title}</Modal.Header>
-                <Modal.Content image>
-                  <Image
-                    wrapped
-                    size="medium"
-                    src={currentChore.image_url}
-                    alt=""
-                  />
-                  <Modal.Description>
-                    <Header>
-                      {`${currentChore.title}` + " is currently "}
-                      {`${currentChore.avaialble}`
-                        ? " available."
-                        : " assigned to " +
-                          "@" +
-                          `${currentChore.currently_assigned}.`}
-                    </Header>
-                    <p>
-                      We've found the following gravatar image associated with
-                      your e-mail address.
-                    </p>
-                    <p>Is it okay to use this photo?</p>
-                  </Modal.Description>
-                </Modal.Content>
-              </Modal>
+              <Modal
+                textAlign="center"
+                style={{ height: "10%" }}
+                size="mini"
+                trigger={<a>{this.props.event.title}</a>}
+                header={currentChore.title}
+                content={
+                  this.props.event.complete
+                    ? "This chore is currently available! To add it to your chores, visit the Chores tab."
+                    : `This chore is currently assigned to @${
+                        currentChore.currently_assigned
+                      }.`
+                }
+                actions={[
+                  {
+                    key: "Sounds Good!",
+                    content: "Sounds Good!",
+                    positive: true
+                  }
+                ]}
+              />
             )}
 
             <Feed.Date>
