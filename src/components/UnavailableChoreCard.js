@@ -20,7 +20,7 @@ class UnavailableChoreCard extends Component {
   };
 
   render() {
-    console.log(this.props.user);
+    console.log(this.props);
     return !this.state.edit ? (
       <Card>
         <Card.Content>
@@ -29,7 +29,8 @@ class UnavailableChoreCard extends Component {
           <Card.Description />
           {this.props.button === "Assigned" ? (
             <Card.Meta>
-              Currently assigned to <a>@{this.props.user.username}</a>
+              Currently assigned to{" "}
+              <a>@{this.props.chore.currently_assigned}</a>
             </Card.Meta>
           ) : (
             <Card.Meta>
