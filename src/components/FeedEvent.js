@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Feed, Icon } from "semantic-ui-react";
+import { Feed, Icon, Modal, Header, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class FeedEvent extends Component {
@@ -36,6 +36,12 @@ class FeedEvent extends Component {
   };
 
   render() {
+    console.log(this.props);
+    const currentChore = this.props.stateUser.chores.filter(
+      chore => chore.id === this.props.event.chore_id
+    )[0];
+    console.log(currentChore);
+
     return (
       <Feed.Event>
         <Feed.Label>
@@ -54,7 +60,32 @@ class FeedEvent extends Component {
             {this.props.event.personal_chore ? (
               this.props.event.title + " (personal chore)"
             ) : (
-              <a>{this.props.event.title}</a>
+              <Modal trigger={<a>{this.props.event.title}</a>}>
+                <Modal.Header>{currentChore.title}</Modal.Header>
+                <Modal.Content image>
+                  <Image
+                    wrapped
+                    size="medium"
+                    src={currentChore.image_url}
+                    alt=""
+                  />
+                  <Modal.Description>
+                    <Header>
+                      {`${currentChore.title}` + " is currently "}
+                      {`${currentChore.avaialble}`
+                        ? " available."
+                        : " assigned to " +
+                          "@" +
+                          `${currentChore.currently_assigned}.`}
+                    </Header>
+                    <p>
+                      We've found the following gravatar image associated with
+                      your e-mail address.
+                    </p>
+                    <p>Is it okay to use this photo?</p>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
             )}
 
             <Feed.Date>
@@ -79,7 +110,7 @@ class FeedEvent extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.users
+    stateUser: state.users
   };
 };
 

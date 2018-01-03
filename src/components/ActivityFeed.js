@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Button, Feed, Icon } from "semantic-ui-react";
+import { Button, Feed, Icon, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions/index";
 import FeedEvent from "./FeedEvent";
