@@ -29,7 +29,8 @@ export default function users(state = defaultState, action) {
             : new Date(b.claimed_at) - new Date(a.claimed_at);
         }),
         loggedIn: true,
-        status: action.payload.user.status
+        status: action.payload.user.status,
+        complete_count: action.payload.user.complete_count
       };
     case UPDATE_USER:
       return {

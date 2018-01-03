@@ -66,7 +66,6 @@ class CreateUser extends Component {
   };
 
   render() {
-    console.log(this.state);
     const options = [
       { text: "Join", key: 0, value: "Join" },
       { text: "Create", key: "create", value: "Create" }

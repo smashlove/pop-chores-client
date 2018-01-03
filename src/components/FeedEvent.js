@@ -1,8 +1,20 @@
 import React, { Component } from "react";
-import { Feed, Icon } from "semantic-ui-react";
+import ReactDOM from "react-dom";
+
+import { Feed, Icon, Portal, Segment, Header } from "semantic-ui-react";
 import { connect } from "react-redux";
+import * as actions from "../actions/index";
+
+import AvailableChoreCard from "./AvailableChoreCard";
+import UnavailableChoreCard from "./UnavailableChoreCard";
 
 class FeedEvent extends Component {
+  constructor() {
+    super();
+
+    this.state = { open: false, disable: false };
+  }
+
   getTime = time => {
     var a = new Date(time);
     var b = new Date();
@@ -34,8 +46,56 @@ class FeedEvent extends Component {
       this.props.history
     );
   };
+  handleAdd = () => {
+    this.setState({ disable: true });
+    this.props.handleAddReload(this.props.tab);
+  };
+
+  callCard = chore => {
+    if (chore.available && !this.state.disable) {
+      return (
+        <AvailableChoreCard
+          portal="true"
+          chore={chore}
+          key={chore.created_at}
+          button="Claim"
+          user={this.props.user}
+          updateChore={this.props.updateChore}
+          handleClose={this.handleClose}
+          history={this.props.history}
+          handleAdd={this.handleAdd}
+          disable={this.state.disable}
+        />
+      );
+    } else if (!chore.available || this.state.disable) {
+      return (
+        <UnavailableChoreCard
+          portal="true"
+          chore={chore}
+          key={chore.created_at}
+          button="Assigned"
+          user={this.props.user}
+          updateChore={this.props.updateChore}
+          handleClose={this.handleClose}
+          history={this.props.history}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
+  handleClick = () => this.setState({ open: !this.state.open });
+
+  handleClose = () => this.setState({ open: false });
 
   render() {
+    const { open } = this.state;
+    const nodePopup = document.getElementById("portal");
+    let chore = this.props.chores.filter(
+      chore => chore.id === this.props.event.chore_id
+    )[0];
+    const card = this.callCard(chore);
     return (
       <Feed.Event>
         <Feed.Label>
@@ -51,11 +111,36 @@ class FeedEvent extends Component {
             {this.props.event.complete === true
               ? " completed the chore "
               : " claimed the chore "}
+
             {this.props.event.personal_chore ? (
               this.props.event.title + " (personal chore)"
             ) : (
-              <a>{this.props.event.title}</a>
+              <a
+                content={open ? "Close Portal" : "Open Portal"}
+                negative={open}
+                positive={!open}
+                onClick={this.handleClick}
+              >
+                {this.props.event.title}
+              </a>
             )}
+
+            <Portal
+              onClose={this.handleClose}
+              open={open}
+              mountNode={nodePopup}
+            >
+              <Segment
+                style={{
+                  left: "40%",
+                  position: "fixed",
+                  top: "30%",
+                  zIndex: 1000
+                }}
+              >
+                {card}
+              </Segment>
+            </Portal>
 
             <Feed.Date>
               {this.getTime(
@@ -78,9 +163,10 @@ class FeedEvent extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
-    user: state.users
+    chores: state.households.households[0].chores
   };
 };
 
-export default connect(mapStateToProps, null)(FeedEvent);
+export default connect(mapStateToProps, actions)(FeedEvent);

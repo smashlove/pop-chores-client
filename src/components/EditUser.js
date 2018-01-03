@@ -24,7 +24,7 @@ class EditUser extends Component {
 
   render() {
     return (
-      <Form onSubmit={() => this.handleSubmit("edit")}>
+      <Form>
         <Card>
           <Image src={this.props.user.profile_pic} />
           <Card.Content>
@@ -68,7 +68,12 @@ class EditUser extends Component {
             >
               <Icon name="delete" />Delete User
             </Button>{" "}
-            <Button basic color="green" type="submit">
+            <Button
+              basic
+              color="green"
+              type="submit"
+              onClick={() => this.handleSubmit("edit")}
+            >
               <Icon name="check" />Submit Edit
             </Button>{" "}
           </div>

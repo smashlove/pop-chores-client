@@ -5,6 +5,7 @@ import ActivityFeed from "./ActivityFeed";
 import UnavailableChoreCard from "./UnavailableChoreCard";
 import NewChoreForm from "./NewChoreForm";
 import { Segment, Card, Grid, Menu, Input } from "semantic-ui-react";
+import ChartView from "./ChartView";
 
 import { connect } from "react-redux";
 import * as actions from "../actions/index";
@@ -24,7 +25,7 @@ class Household extends Component {
         return (
           <AvailableChoreCard
             chore={chore}
-            key={chore.id}
+            key={chore.created_at}
             button="Claim"
             user={this.props.user}
             edit={this.props.edit}
@@ -35,7 +36,7 @@ class Household extends Component {
         return (
           <UnavailableChoreCard
             chore={chore}
-            key={chore.id}
+            key={chore.created_at}
             button="Assigned"
             user={this.props.user}
             edit={this.props.edit}
@@ -63,11 +64,16 @@ class Household extends Component {
       case "activity":
         return (
           <Segment>
-            <ActivityFeed type="household" user={this.props.user} />
+            <ActivityFeed
+              type="household"
+              user={this.props.user}
+              handleAddReload={this.handleAddReload}
+              tab="chores"
+            />
           </Segment>
         );
       case "scoreboard":
-        return <div>3</div>;
+        return <ChartView />;
       case "add chore":
         return (
           <NewChoreForm handleAddReload={this.handleAddReload} tab="chores" />

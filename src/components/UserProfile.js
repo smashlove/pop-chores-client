@@ -88,7 +88,11 @@ class UserProfile extends Component {
   myActivity = () => {
     return (
       <Segment>
-        <ActivityFeed type="user" user={this.props.user} />
+        <ActivityFeed
+          type="user"
+          user={this.props.user}
+          handleAddReload={this.handleAddReload}
+        />
       </Segment>
     );
   };

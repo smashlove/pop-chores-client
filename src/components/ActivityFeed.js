@@ -9,7 +9,7 @@ class ActivityFeed extends Component {
   constructor() {
     super();
 
-    this.state = { limit: 10 };
+    this.state = { limit: 15 };
   }
 
   createFeed = () => {

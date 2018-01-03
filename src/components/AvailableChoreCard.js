@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Card, Image, Button, Label } from "semantic-ui-react";
 import EditCard from "./EditCard";
+import { connect } from "react-redux";
 
 class AvailableChoreCard extends Component {
   constructor() {
     super();
 
     this.state = {
-      edit: false
+      edit: false,
+      disable: false
     };
   }
 
@@ -18,6 +20,15 @@ class AvailableChoreCard extends Component {
       "add",
       this.props.history
     );
+    if (this.props.portal === "true") {
+      this.props.handleClose();
+      this.handleAdd();
+      this.props.handleAdd();
+    }
+  };
+
+  handleAdd = () => {
+    this.setState({ disable: true });
   };
 
   handleEdit = () => {
@@ -29,6 +40,7 @@ class AvailableChoreCard extends Component {
   };
 
   render() {
+    console.log("sup", this.props.chore);
     return !this.state.edit ? (
       <Card>
         <Card.Content>
@@ -46,15 +58,16 @@ class AvailableChoreCard extends Component {
               <strong>Points: {this.props.chore.point_value}</strong>
             </Button>
           </div>
-
-          <Label
-            attached="top right"
-            icon="edit"
-            corner
-            as="a"
-            size="mini"
-            onClick={this.edit}
-          />
+          {this.props.portal !== "true" ? (
+            <Label
+              attached="top right"
+              icon="edit"
+              corner
+              as="a"
+              size="mini"
+              onClick={this.edit}
+            />
+          ) : null}
         </Card.Content>
       </Card>
     ) : (
@@ -69,4 +82,10 @@ class AvailableChoreCard extends Component {
   }
 }
 
-export default AvailableChoreCard;
+const mapStateToProps = state => {
+  return {
+    state: state
+  };
+};
+
+export default connect(mapStateToProps, null)(AvailableChoreCard);
