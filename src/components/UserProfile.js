@@ -109,6 +109,8 @@ class UserProfile extends Component {
             edit={this.props.edit}
           />
         );
+      } else {
+        return null;
       }
     });
   };
@@ -131,6 +133,8 @@ class UserProfile extends Component {
             edit={this.props.edit}
           />
         );
+      } else {
+        return null;
       }
     });
   };

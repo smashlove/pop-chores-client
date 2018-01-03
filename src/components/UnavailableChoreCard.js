@@ -20,7 +20,6 @@ class UnavailableChoreCard extends Component {
   };
 
   render() {
-    console.log(this.props);
     return !this.state.edit ? (
       <Card>
         <Card.Content>

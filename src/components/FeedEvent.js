@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Feed, Icon, Modal, Header, Image, Button } from "semantic-ui-react";
+import { Feed, Icon, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class FeedEvent extends Component {
