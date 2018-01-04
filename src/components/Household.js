@@ -13,7 +13,7 @@ import {
   List,
   Image,
   Header,
-  Modal
+  Popup
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
@@ -106,31 +106,23 @@ class Household extends Component {
   };
 
   createList = () => {
+    const node = document.getElementById("list");
     return this.props.households.households[0].users.map(user => {
       return (
         <List.Item key={user.username}>
           <Image avatar src={user.profile_pic} />
           <List.Content>
             <List.Header as="a">
-              <Modal
-                style={{ height: "10%" }}
-                size="mini"
+              <Popup
+                style={{ height: "5%" }}
                 trigger={
                   <div as="a">
                     {user.first_name} {user.last_name}
                   </div>
                 }
-                header={`${user.first_name} ${user.last_name}`}
                 content={`@${user.username} currently has ${
                   user.points
                 } points.`}
-                actions={[
-                  {
-                    key: "Nice!",
-                    content: "Nice!",
-                    positive: true
-                  }
-                ]}
               />
             </List.Header>
           </List.Content>
@@ -150,7 +142,7 @@ class Household extends Component {
             <Segment>
               {" "}
               <Header>Household Members</Header>
-              <List>{listItems}</List>
+              <List id="list">{listItems}</List>
             </Segment>
           </Grid.Column>
           <Grid.Column width={12}>
