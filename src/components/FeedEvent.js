@@ -83,7 +83,7 @@ class FeedEvent extends Component {
               <Modal
                 style={{ height: "10%" }}
                 size="mini"
-                trigger={<a>{this.props.event.title}</a>}
+                trigger={<div as="a">{this.props.event.title}</div>}
                 header={currentChore.title}
                 content={
                   this.props.event.complete
