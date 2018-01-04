@@ -20,22 +20,25 @@ class UnavailableChoreCard extends Component {
   };
 
   render() {
+    console.log(this.props);
     return !this.state.edit ? (
       <Card>
+        <Card.Description>
+          <Image
+            rounded
+            centered
+            size="medium"
+            src={this.props.chore.image_url}
+          />
+        </Card.Description>
         <Card.Content>
-          <Image floated="left" size="small" src={this.props.chore.image_url} />
-          <Card.Header>{this.props.chore.title}</Card.Header>
-          <Card.Description />
+          <Card.Header>{this.props.chore.title}</Card.Header>{" "}
           {this.props.button === "Assigned" ? (
             <Card.Meta>
-              Currently assigned to{" "}
+              Currently assigned to
               <a>@{this.props.chore.currently_assigned}</a>
             </Card.Meta>
-          ) : (
-            <Card.Meta>
-              Completed on {this.props.chore.date_completed}
-            </Card.Meta>
-          )}
+          ) : null}
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">

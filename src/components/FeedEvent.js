@@ -57,7 +57,7 @@ class FeedEvent extends Component {
                 <Modal
                   style={{ height: "10%" }}
                   size="mini"
-                  trigger={<a>@{this.props.user.username}</a>}
+                  trigger={<div as="a">@{this.props.user.username}</div>}
                   header={`${this.props.user.first_name} ${
                     this.props.user.last_name
                   }`}
@@ -81,7 +81,6 @@ class FeedEvent extends Component {
               this.props.event.title + " (personal chore)"
             ) : (
               <Modal
-                textAlign="center"
                 style={{ height: "10%" }}
                 size="mini"
                 trigger={<a>{this.props.event.title}</a>}

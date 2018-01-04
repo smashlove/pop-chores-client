@@ -9,7 +9,8 @@ class EditUser extends Component {
       first_name: props.user.first_name,
       last_name: props.user.last_name,
       username: props.user.username,
-      status: props.user.status
+      status: props.user.status,
+      profile_pic: props.user.profile_pic
     };
   }
 
@@ -27,6 +28,13 @@ class EditUser extends Component {
       <Form onSubmit={() => this.handleSubmit("edit")}>
         <Card>
           <Image src={this.props.user.profile_pic} />
+          <Form.Input
+            size="mini"
+            name="profile_pic"
+            placeholder="Image URL"
+            onChange={this.handleChange}
+            value={this.state.profile_pic}
+          />
           <Card.Content>
             <Form.Input
               size="mini"
@@ -68,7 +76,11 @@ class EditUser extends Component {
             >
               <Icon name="delete" />Delete User
             </Button>{" "}
-            <Button basic color="green" type="submit">
+            <Button
+              basic
+              color="green"
+              onClick={() => this.handleSubmit("edit")}
+            >
               <Icon name="check" />Submit Edit
             </Button>{" "}
           </div>

@@ -17,10 +17,12 @@ class ActivityFeed extends Component {
 
     if (this.props.type === "household") {
       return this.props.all_activity
+        .filter(chore => chore.complete === true)
         .sort(function(a, b) {
-          return b.complete === true
-            ? new Date(b.completed_at) - new Date(a.completed_at)
-            : new Date(b.claimed_at) - new Date(a.claimed_at);
+          return (
+            new Date(b.completed_at).getTime() -
+            new Date(a.completed_at).getTime()
+          );
         })
         .slice(0, limit)
         .map(event => {
@@ -40,10 +42,12 @@ class ActivityFeed extends Component {
 
     if (this.props.type === "user") {
       return this.props.all_activity
+        .filter(chore => chore.complete === true)
         .sort(function(a, b) {
-          return b.complete === true
-            ? new Date(b.completed_at) - new Date(a.completed_at)
-            : new Date(b.claimed_at) - new Date(a.claimed_at);
+          return (
+            new Date(b.completed_at).getTime() -
+            new Date(a.completed_at).getTime()
+          );
         })
         .slice(0, limit)
         .map(event => {

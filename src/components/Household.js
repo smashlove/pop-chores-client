@@ -66,8 +66,6 @@ class Household extends Component {
             <ActivityFeed type="household" user={this.props.user} />
           </Segment>
         );
-      case "scoreboard":
-        return <div>3</div>;
       case "add chore":
         return (
           <NewChoreForm handleAddReload={this.handleAddReload} tab="chores" />
@@ -114,11 +112,6 @@ class Household extends Component {
                 <Menu.Item
                   name="activity"
                   active={activeItem === "activity"}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  name="scoreboard"
-                  active={activeItem === "scoreboard"}
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item

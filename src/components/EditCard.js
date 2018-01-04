@@ -43,6 +43,7 @@ class EditCard extends Component {
 
   render() {
     const options = [
+      { key: 0, text: "0", value: 0 },
       { key: 1, text: "5", value: 5 },
       { key: 2, text: "10", value: 10 },
       { key: 3, text: "15", value: 15 },

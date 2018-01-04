@@ -158,7 +158,7 @@ class UserProfile extends Component {
                     </Card.Header>
                     <Card.Meta>@{this.props.user.username}</Card.Meta>
                     <Card.Description>
-                      Cleaning up the Netflix queue.
+                      {this.props.user.status}
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
