@@ -31,11 +31,17 @@ class AvailableChoreCard extends Component {
   render() {
     return !this.state.edit ? (
       <Card>
+        <Card.Description>
+          <Image
+            rounded
+            centered
+            size="medium"
+            src={this.props.chore.image_url}
+          />
+        </Card.Description>
         <Card.Content>
-          <Image floated="left" size="small" src={this.props.chore.image_url} />
           <Card.Header>{this.props.chore.title}</Card.Header>
           <Card.Meta> {this.props.chore.description}</Card.Meta>
-          <Card.Description />
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">

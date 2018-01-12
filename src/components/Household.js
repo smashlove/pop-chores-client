@@ -4,7 +4,17 @@ import AvailableChoreCard from "./AvailableChoreCard";
 import ActivityFeed from "./ActivityFeed";
 import UnavailableChoreCard from "./UnavailableChoreCard";
 import NewChoreForm from "./NewChoreForm";
-import { Segment, Card, Grid, Menu, Input } from "semantic-ui-react";
+import {
+  Segment,
+  Card,
+  Grid,
+  Menu,
+  Input,
+  List,
+  Image,
+  Header,
+  Popup
+} from "semantic-ui-react";
 
 import { connect } from "react-redux";
 import * as actions from "../actions/index";
@@ -66,8 +76,6 @@ class Household extends Component {
             <ActivityFeed type="household" user={this.props.user} />
           </Segment>
         );
-      case "scoreboard":
-        return <div>3</div>;
       case "add chore":
         return (
           <NewChoreForm handleAddReload={this.handleAddReload} tab="chores" />
@@ -96,13 +104,47 @@ class Household extends Component {
         .join("")}`
     );
   };
+
+  createList = () => {
+    const node = document.getElementById("list");
+    return this.props.households.households[0].users.map(user => {
+      return (
+        <List.Item key={user.username}>
+          <Image avatar src={user.profile_pic} />
+          <List.Content>
+            <List.Header as="a">
+              <Popup
+                style={{ height: "5%" }}
+                trigger={
+                  <div as="a">
+                    {user.first_name} {user.last_name}
+                  </div>
+                }
+                content={`@${user.username} currently has ${
+                  user.points
+                } points.`}
+              />
+            </List.Header>
+          </List.Content>
+        </List.Item>
+      );
+    });
+  };
+
   render() {
     const { activeItem } = this.state;
     const tabContent = this.handleTab();
+    const listItems = this.createList();
     return (
       <Grid>
         <Grid.Row>
-          <Grid.Column width={2} />
+          <Grid.Column width={4}>
+            <Segment>
+              {" "}
+              <Header>Household Members</Header>
+              <List id="list">{listItems}</List>
+            </Segment>
+          </Grid.Column>
           <Grid.Column width={12}>
             <Segment.Group>
               <Menu attached="top" tabular>
@@ -114,11 +156,6 @@ class Household extends Component {
                 <Menu.Item
                   name="activity"
                   active={activeItem === "activity"}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  name="scoreboard"
-                  active={activeItem === "scoreboard"}
                   onClick={this.handleItemClick}
                 />
                 <Menu.Item
@@ -140,7 +177,6 @@ class Household extends Component {
               <Segment attached="bottom">{tabContent}</Segment>
             </Segment.Group>
           </Grid.Column>
-          <Grid.Column width={2} />
         </Grid.Row>
       </Grid>
     );

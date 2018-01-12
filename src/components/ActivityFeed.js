@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Button, Feed, Icon, Modal } from "semantic-ui-react";
+import { Button, Feed, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions/index";
 import FeedEvent from "./FeedEvent";
@@ -17,10 +17,12 @@ class ActivityFeed extends Component {
 
     if (this.props.type === "household") {
       return this.props.all_activity
+        .filter(chore => chore.complete === true)
         .sort(function(a, b) {
-          return b.complete === true
-            ? new Date(b.completed_at) - new Date(a.completed_at)
-            : new Date(b.claimed_at) - new Date(a.claimed_at);
+          return (
+            new Date(b.completed_at).getTime() -
+            new Date(a.completed_at).getTime()
+          );
         })
         .slice(0, limit)
         .map(event => {
@@ -40,10 +42,12 @@ class ActivityFeed extends Component {
 
     if (this.props.type === "user") {
       return this.props.all_activity
+        .filter(chore => chore.complete === true)
         .sort(function(a, b) {
-          return b.complete === true
-            ? new Date(b.completed_at) - new Date(a.completed_at)
-            : new Date(b.claimed_at) - new Date(a.claimed_at);
+          return (
+            new Date(b.completed_at).getTime() -
+            new Date(a.completed_at).getTime()
+          );
         })
         .slice(0, limit)
         .map(event => {
@@ -68,13 +72,13 @@ class ActivityFeed extends Component {
 
   render() {
     const all_activity = this.createFeed();
-
+    let currentlimit = this.state.limit;
     return (
       <Feed>
         {all_activity}
         {this.state.limit < 11 ? (
           <Button
-            onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+            onClick={() => this.setState({ limit: (currentlimit += 10) })}
           >
             Load more...
           </Button>
@@ -91,7 +95,7 @@ class ActivityFeed extends Component {
             <Button
               icon
               labelPosition="right"
-              onClick={() => this.setState({ limit: (this.state.limit += 10) })}
+              onClick={() => this.setState({ limit: (currentlimit += 10) })}
             >
               More
               <Icon name="right arrow" />
@@ -104,7 +108,6 @@ class ActivityFeed extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     households: state.households,
     users: state.households.households.filter(

@@ -17,8 +17,3 @@ body > div > div > div.login-form {
 #root > div > div:nth-child(1) > div {
   margin-bottom: 1%;
 }
-
-.ui.card .content img,
-.ui.cards > .card .content img {
-  max-width: 30%;
-}
